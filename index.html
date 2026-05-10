@@ -3,164 +3,191 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MARBOHA TECH | Pro Experience</title>
+  <title>MARBOHA TECH | Ultimate Edition</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
   
   <style>
-    :root { --apple-blue: #0071e3; --gold: #D4AF37; }
-    body { font-family: 'Montserrat', sans-serif; background: #ffffff; color: #1d1d1f; margin: 0; scroll-behavior: smooth; overflow-x: hidden; }
-
-    /* Transitions */
-    .view { display: none; width: 100%; min-height: 100vh; animation: iosScale 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
-    .view.active { display: block !important; }
-    @keyframes iosScale { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
-
-    /* Glass Navbar */
-    .apple-nav { 
-      background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(20px) saturate(180%); 
-      border-bottom: 1px solid rgba(0,0,0,0.05); position: fixed; top: 0; width: 100%; z-index: 1000; height: 55px; 
+    :root { 
+        --apple-blue: #0071e3; 
+        --ios-bg: #ffffff; 
+        --ios-text: #1d1d1f;
+        --ios-card: #fbfbfd;
     }
-
-    /* Sidebar (Playlist) - اليسار */
-    #sidebar {
-      position: fixed; top: 0; left: 0; width: 300px; height: 100%; 
-      background: white; z-index: 4000; transform: translateX(-100%);
-      transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 20px 0 60px rgba(0,0,0,0.1); padding: 40px;
-    }
-    #sidebar.open { transform: translateX(0); }
-
-    /* Cart Drawer (السلة الجانبية) - اليمين */
-    #cart-drawer {
-      position: fixed; top: 0; right: 0; width: 350px; height: 100%; 
-      background: white; z-index: 4000; transform: translateX(100%);
-      transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: -20px 0 60px rgba(0,0,0,0.1); display: flex; flex-direction: column;
-    }
-    #cart-drawer.open { transform: translateX(0); }
     
-    @media (max-width: 400px) { #cart-drawer { width: 100%; } }
-
-    /* Overlay (الخلفية المظلمة عند فتح القوائم) */
-    .global-overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.3); backdrop-filter: blur(4px);
-      z-index: 3500; display: none; opacity: 0; transition: 0.3s;
+    .dark-mode { 
+        --ios-bg: #000000; 
+        --ios-text: #ffffff;
+        --ios-card: #1c1c1e;
     }
-    .global-overlay.active { display: block; opacity: 1; }
 
-    /* Product Cards */
-    .p-card {
-      background: #fff; border-radius: 30px; padding: 20px; transition: 0.5s;
-      border: 1px solid #f8f8f8; cursor: pointer; position: relative;
+    body { 
+        font-family: 'Montserrat', sans-serif; 
+        background-color: var(--ios-bg); 
+        color: var(--ios-text); 
+        transition: background 0.5s, color 0.5s;
+        margin: 0; scroll-behavior: smooth; overflow-x: hidden; 
     }
-    .p-card:hover { transform: translateY(-10px); border-color: var(--apple-blue); box-shadow: 0 30px 60px rgba(0,0,0,0.05); }
+
+    /* Apple Glass Navigation */
+    .apple-nav { 
+        background: rgba(var(--ios-bg), 0.8); 
+        backdrop-filter: blur(25px) saturate(180%); 
+        border-bottom: 1px solid rgba(125, 125, 125, 0.1); 
+        position: fixed; top: 0; width: 100%; z-index: 1000; height: 60px; 
+    }
+
+    /* Views System */
+    .view { display: none; width: 100%; min-height: 100vh; animation: iosSlide 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+    .view.active { display: block !important; }
+    @keyframes iosSlide { from { opacity: 0; transform: scale(0.98) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+
+    /* Modern Sidebars */
+    #sidebar, #cart-drawer { 
+        position: fixed; top: 0; height: 100%; z-index: 4000; 
+        background: var(--ios-bg); transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); 
+        box-shadow: 0 0 60px rgba(0,0,0,0.1);
+    }
+    #sidebar { left: 0; width: 300px; transform: translateX(-100%); }
+    #cart-drawer { right: 0; width: 350px; transform: translateX(100%); border-left: 1px solid rgba(125, 125, 125, 0.1); }
+    #sidebar.open, #cart-drawer.open { transform: translateX(0); }
+
+    /* Overlays */
+    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(5px); z-index: 3500; display: none; }
+    .overlay.active { display: block; }
+
+    /* Product UI */
+    .product-card { 
+        background: var(--ios-card); border-radius: 35px; padding: 25px; transition: 0.4s;
+        border: 1px solid rgba(125, 125, 125, 0.05); cursor: pointer; text-align: center;
+    }
+    .product-card:hover { transform: translateY(-12px); border-color: var(--apple-blue); box-shadow: 0 25px 50px rgba(0,0,0,0.1); }
 
     .btn-apple { background: var(--apple-blue); color: white; border-radius: 50px; padding: 14px 40px; font-weight: 700; transition: 0.3s; }
     
-    /* Notification */
-    #notification { position: fixed; top: 70px; right: 20px; background: #000; color: white; padding: 15px 25px; border-radius: 20px; z-index: 5000; display: none; animation: slideIn 0.4s ease; }
-    @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+    /* WhatsApp Floating Button */
+    .wa-float {
+        position: fixed; bottom: 30px; left: 30px; background: #25d366; 
+        color: white; width: 60px; height: 60px; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        box-shadow: 0 15px 30px rgba(37, 211, 102, 0.3); z-index: 2000;
+        transition: 0.3s;
+    }
+    .wa-float:hover { transform: scale(1.1); }
+
+    /* Skeleton Loading Placeholder */
+    .skeleton { background: #e0e0e0; border-radius: 20px; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
   </style>
 </head>
-<body>
+<body id="body">
 
-  <div id="notification" class="font-bold text-sm">Ajouté avec succès ! ✅</div>
+  <div class="overlay" id="overlay" onclick="closeAll()"></div>
 
-  <div class="global-overlay" id="overlay" onclick="closeAll()"></div>
+  <a href="https://wa.me/212771737049" class="wa-float" target="_blank">
+    <svg width="30" height="30" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.353-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.05-.148-.471-1.138-.645-1.553-.168-.406-.338-.352-.471-.352-.122 0-.262-.01-.403-.01s-.37.053-.563.262c-.194.21-0.741.724-0.741 1.763s.76 2.043.864 2.183c.105.14 1.492 2.278 3.614 3.25 2.12.972 2.12.648 2.503.613.383-.035 1.235-.505 1.41-.99.173-.483.173-.898.121-.986-.051-.088-.186-.14-.482-.288zM12.167 2.01c-5.505 0-9.989 4.484-9.989 9.989 0 1.763.459 3.42 1.258 4.86L2.1 22l5.312-1.391c1.393.759 2.977 1.19 4.654 1.19 5.505 0 9.989-4.484 9.989-9.989 0-5.505-4.484-9.989-9.989-9.989z"/></svg>
+  </a>
 
-  <div id="sidebar">
+  <div id="sidebar" class="p-10">
     <div class="flex justify-between items-center mb-16">
-        <h3 class="font-black italic text-xl text-blue-600">PLAYLIST</h3>
-        <button onclick="closeAll()" class="text-3xl text-gray-300">&times;</button>
+        <h3 class="font-black italic text-xl text-blue-600 tracking-tighter">PLAYLIST</h3>
+        <button onclick="closeAll()" class="text-4xl opacity-20">&times;</button>
     </div>
-    <nav class="flex flex-col gap-8 text-left">
-        <button onclick="go('home-view'); closeAll()" class="font-bold uppercase text-[11px] tracking-[0.3em] hover:text-blue-600">01. Accueil</button>
-        <button onclick="go('support-view'); closeAll()" class="font-bold uppercase text-[11px] tracking-[0.3em] hover:text-blue-600">02. Support</button>
-        <div class="h-[1px] bg-gray-100 my-4"></div>
-        <a href="https://wa.me/212771737049" class="font-bold text-sm text-green-500">WhatsApp Direct</a>
+    <nav class="flex flex-col gap-8">
+        <button onclick="go('home-view'); closeAll()" class="text-left font-bold uppercase text-[11px] tracking-[0.3em] hover:text-blue-600 transition">01. Accueil</button>
+        <button onclick="go('support-view'); closeAll()" class="text-left font-bold uppercase text-[11px] tracking-[0.3em] hover:text-blue-600 transition">02. Support</button>
     </nav>
   </div>
 
-  <div id="cart-drawer">
-    <div class="p-8 flex justify-between items-center border-b">
-        <h3 class="font-black italic text-xl">MON PANIER</h3>
-        <button onclick="closeAll()" class="text-4xl text-gray-200">&times;</button>
+  <div id="cart-drawer" class="flex flex-col">
+    <div class="p-8 border-b flex justify-between items-center">
+        <h3 class="font-black italic text-xl">VOTRE SAC</h3>
+        <button onclick="closeAll()" class="text-4xl opacity-20">&times;</button>
     </div>
-    
-    <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-6">
-        <p class="text-center text-gray-400 mt-10">Votre sac est vide.</p>
-    </div>
-
-    <div class="p-8 border-t bg-gray-50">
-        <div class="flex justify-between items-center mb-6">
-            <span class="font-bold text-gray-400">TOTAL</span>
-            <span id="total-price" class="text-2xl font-black text-blue-600">0 DH</span>
+    <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4"></div>
+    <div class="p-8 border-t bg-black text-white rounded-t-[40px]">
+        <div class="flex justify-between items-center mb-6 px-2">
+            <span class="font-bold opacity-50">Total</span>
+            <span id="total-price" class="text-3xl font-black">0 DH</span>
         </div>
-        <button onclick="checkout()" class="w-full py-5 btn-apple text-xs font-black uppercase tracking-widest shadow-xl">Commander (WhatsApp)</button>
+        <button onclick="checkout()" class="w-full py-6 btn-apple text-xs uppercase font-black tracking-widest shadow-xl">Valider la commande</button>
     </div>
   </div>
 
-  <nav class="apple-nav">
-    <div class="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
+  <nav class="apple-nav px-6">
+    <div class="max-w-7xl mx-auto h-full flex items-center justify-between">
       <button onclick="toggleSidebar(true)" class="p-2">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/><circle cx="5" cy="12" r="1.5"/></svg>
       </button>
 
       <div onclick="go('home-view')" class="flex items-center gap-2 cursor-pointer absolute left-1/2 -translate-x-1/2">
-        <div class="bg-black text-white px-2 py-1 rounded font-black text-[10px]">MT</div>
+        <div class="bg-black text-white px-2 py-1 rounded-lg font-black text-[10px]">MT</div>
         <span class="text-xs font-black italic uppercase tracking-tighter">MARBOHA <span class="text-blue-600">TECH</span></span>
       </div>
 
-      <button onclick="toggleCart(true)" class="relative p-2">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-        <span id="badge" class="absolute -top-1 -right-1 bg-red-600 text-white text-[8px] w-4 h-4 rounded-full flex items-center justify-center hidden font-bold">0</span>
-      </button>
+      <div class="flex items-center gap-4">
+        <button onclick="toggleTheme()" class="p-2 hover:opacity-50 transition">
+            <svg id="theme-icon" width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3c.132 0 .263 0 .393.007a9 9 0 0 0 7.599 10.652 9 9 0 1 1-7.992-10.659zm0-2a11 11 0 1 0 11 11 11 11 0 0 0-11-11z"/></svg>
+        </button>
+        <button onclick="toggleCart(true)" class="relative p-2">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            <span id="badge" class="absolute -top-1 -right-1 bg-red-600 text-white text-[9px] w-5 h-5 rounded-full flex items-center justify-center hidden font-black border-2 border-white">0</span>
+        </button>
+      </div>
     </div>
   </nav>
 
-  <div id="home-view" class="view active">
-    <section class="h-[75vh] flex flex-col justify-center items-center text-center px-6 bg-[#fbfbfd] relative overflow-hidden pt-12">
-      <div class="absolute inset-0 opacity-40">
-          <img src="https://i.ibb.co/XfXkYmN/hero-watch-earbuds.jpg" class="w-full h-full object-cover">
-      </div>
-      <div class="relative z-10">
-          <h1 class="text-6xl md:text-8xl font-black italic tracking-tighter mb-4 text-gray-900">MARBOHA</h1>
-          <p class="text-blue-600 font-bold text-xs tracking-[0.8em] mb-12 uppercase">Samsung Pro Store</p>
-          <button onclick="document.getElementById('store').scrollIntoView()" class="btn-apple px-16 shadow-2xl">VOIR LES PRODUITS</button>
-      </div>
+  <div id="home-view" class="view active pt-20">
+    <section class="h-[65vh] flex flex-col justify-center items-center text-center px-6 mb-20 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20"><img src="Screenshot 2026-05-08 220005.jpg" class="w-full h-full object-cover"></div>
+        <h1 class="text-6xl md:text-8xl font-black italic tracking-tighter mb-4 z-10">MARBOHA</h1>
+        <p class="text-blue-600 font-bold text-xs tracking-[0.8em] uppercase z-10">Samsung Ecosystem</p>
     </section>
 
-    <div id="store" class="max-w-7xl mx-auto py-24 px-6">
-        <div id="products-grid" class="grid grid-cols-2 md:grid-cols-4 gap-8"></div>
+    <div class="max-w-7xl mx-auto px-6 pb-32">
+        <div class="flex items-center justify-between mb-16 border-b pb-8">
+            <h2 class="text-3xl font-black italic uppercase tracking-tighter">Catalogue.</h2>
+            <span class="text-[10px] font-bold opacity-30 uppercase tracking-widest">Nouveautés 2026</span>
+        </div>
+        <div id="products-grid" class="grid grid-cols-2 md:grid-cols-4 gap-10"></div>
     </div>
   </div>
 
-  <div id="details-view" class="view pt-24 px-6 bg-[#f5f5f7]">
-    <div class="max-w-6xl mx-auto bg-white p-10 md:p-16 rounded-[50px] shadow-2xl flex flex-col md:flex-row gap-16 items-center border border-gray-100">
-      <div class="md:w-1/2 bg-gray-50 rounded-[40px] p-8 text-center">
-          <img id="p-img" src="" class="w-full h-80 object-contain mx-auto">
+  <div id="details-view" class="view pt-24 px-6">
+    <div class="max-w-6xl mx-auto bg-white dark:bg-zinc-900 p-10 md:p-20 rounded-[60px] shadow-2xl flex flex-col md:flex-row gap-20 items-center border border-gray-100 dark:border-white/5">
+      <div class="md:w-1/2 bg-gray-50 dark:bg-black rounded-[50px] p-12">
+          <img id="p-img" src="" class="w-full h-[400px] object-contain">
       </div>
       <div class="md:w-1/2 text-left">
-        <button onclick="go('home-view')" class="text-gray-400 font-bold text-[10px] mb-8 block uppercase tracking-widest">← Boutique</button>
-        <h2 id="p-name" class="text-4xl font-black mb-6 italic uppercase tracking-tighter text-gray-900"></h2>
+        <button onclick="go('home-view')" class="text-blue-600 font-bold text-[11px] mb-8 uppercase tracking-widest">← Boutique</button>
+        <h2 id="p-name" class="text-5xl font-black mb-6 italic uppercase tracking-tighter"></h2>
         <p id="p-desc" class="text-gray-400 text-lg mb-12 font-medium leading-relaxed"></p>
         <div id="p-price" class="text-6xl font-black text-blue-600 block mb-12 italic"></div>
-        <button id="add-btn" class="btn-apple w-full py-6 text-sm uppercase">AJOUTER AU PANIER</button>
+        <button id="add-btn" class="btn-apple w-full py-6 text-sm uppercase shadow-xl shadow-blue-200">AJOUTER AU SAC</button>
       </div>
     </div>
   </div>
 
   <div id="support-view" class="view pt-24 px-6">
     <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-6xl font-black italic uppercase mb-20 tracking-tighter">Contact.</h2>
-        <form id="contact-form" class="bg-gray-50 p-10 md:p-16 rounded-[60px] text-left space-y-6 max-w-2xl mx-auto">
+        <h2 class="text-6xl font-black italic uppercase mb-20 tracking-tighter">Support.</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
+            <a href="https://wa.me/212771737049" target="_blank" class="p-12 bg-gray-50 dark:bg-zinc-900 rounded-[50px] transition hover:scale-105 border border-transparent hover:border-green-500">
+                <span class="text-5xl block mb-4">💬</span>
+                <p class="font-black uppercase text-xs tracking-widest">WhatsApp Direct</p>
+            </a>
+            <a href="https://instagram.com/shop._.maroc7" target="_blank" class="p-12 bg-gray-50 dark:bg-zinc-900 rounded-[50px] transition hover:scale-105 border border-transparent hover:border-purple-500">
+                <span class="text-5xl block mb-4">📸</span>
+                <p class="font-black uppercase text-xs tracking-widest">Instagram Official</p>
+            </a>
+        </div>
+        <form id="contact-form" class="bg-gray-50 dark:bg-zinc-900 p-10 md:p-20 rounded-[60px] text-left space-y-6 max-w-3xl mx-auto shadow-inner">
             <input type="hidden" name="access_key" value="83029047-dab7-46d7-a0fa-cde6ca83dd8b">
-            <input type="text" name="name" placeholder="Nom" required class="w-full p-5 rounded-2xl bg-white border-none outline-none ring-1 ring-gray-100">
-            <input type="email" name="email" placeholder="Email" required class="w-full p-5 rounded-2xl bg-white border-none outline-none ring-1 ring-gray-100">
-            <textarea name="message" placeholder="Votre message..." rows="5" required class="w-full p-5 rounded-2xl bg-white border-none outline-none ring-1 ring-gray-100 resize-none"></textarea>
+            <input type="text" name="name" placeholder="Nom" required class="w-full p-6 rounded-2xl bg-white dark:bg-black border-none outline-none ring-1 ring-gray-100 dark:ring-white/10">
+            <input type="email" name="email" placeholder="Email" required class="w-full p-6 rounded-2xl bg-white dark:bg-black border-none outline-none ring-1 ring-gray-100 dark:ring-white/10">
+            <textarea name="message" placeholder="Votre message..." rows="5" required class="w-full p-6 rounded-2xl bg-white dark:bg-black border-none outline-none ring-1 ring-gray-200 dark:ring-white/10 resize-none"></textarea>
             <button type="submit" class="btn-apple w-full py-6 font-black uppercase">Envoyer le message</button>
-            <p id="form-log" class="text-center font-bold text-xs text-blue-600 mt-4"></p>
+            <p id="form-log" class="text-center font-bold text-xs text-blue-600 mt-4 uppercase"></p>
         </form>
     </div>
   </div>
@@ -181,7 +208,6 @@
       window.scrollTo({top: 0, behavior: 'smooth'});
     }
 
-    // التحكم في القائمة الجانبية والسلة
     function toggleSidebar(s) { 
         document.getElementById('sidebar').classList.toggle('open', s);
         document.getElementById('overlay').classList.toggle('active', s);
@@ -198,12 +224,25 @@
         document.getElementById('overlay').classList.remove('active');
     }
 
+    function toggleTheme() {
+        const body = document.getElementById('body');
+        const icon = document.getElementById('theme-icon');
+        body.classList.toggle('dark-mode');
+        if(body.classList.contains('dark-mode')) {
+            icon.innerHTML = '<path d="M12 7c-2.761 0-5 2.239-5 5s2.239 5 5 5 5-2.239 5-5-2.239-5-5-5zm0 12c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zm0-17l1.323 3.677 3.677 1.323-3.677 1.323-1.323 3.677-1.323-3.677-3.677-1.323 3.677-1.323 1.323-3.677z"/>';
+        } else {
+            icon.innerHTML = '<path d="M12 3c.132 0 .263 0 .393.007a9 9 0 0 0 7.599 10.652 9 9 0 1 1-7.992-10.659zm0-2a11 11 0 1 0 11 11 11 11 0 0 0-11-11z"/>';
+        }
+    }
+
     function render() {
       document.getElementById('products-grid').innerHTML = productsDB.map(p => `
-        <div class="p-card" onclick="showP(${p.id})">
-          <div class="absolute top-4 right-4 bg-black text-white px-3 py-1 rounded-full text-[10px] font-black">${p.price} DH</div>
-          <img src="${p.img}" class="w-full h-48 object-contain mb-6">
-          <h3 class="font-black text-[11px] uppercase italic text-center">${p.name}</h3>
+        <div class="product-card" onclick="showP(${p.id})">
+          <div class="w-full h-56 mb-8 flex items-center justify-center">
+              <img src="${p.img}" class="max-h-full object-contain">
+          </div>
+          <h3 class="font-black text-[11px] uppercase italic mb-2 tracking-tighter">${p.name}</h3>
+          <div class="text-blue-600 font-black text-xl">${p.price} DH</div>
         </div>`).join('');
     }
 
@@ -221,25 +260,23 @@
       const p = productsDB.find(x => x.id === id);
       cart.push(p);
       updateCart();
-      const n = document.getElementById('notification');
-      n.style.display = 'block';
-      setTimeout(() => n.style.display = 'none', 2000);
-      toggleCart(true); // فتح السلة تلقائياً عند الإضافة
+      toggleCart(true);
     }
 
     function updateCart() {
-      document.getElementById('badge').innerText = cart.length;
-      document.getElementById('badge').classList.toggle('hidden', cart.length === 0);
+      const badge = document.getElementById('badge');
+      badge.innerText = cart.length;
+      badge.classList.toggle('hidden', cart.length === 0);
       document.getElementById('total-price').innerText = cart.reduce((s, i) => s + i.price, 0) + " DH";
       
       const container = document.getElementById('cart-items');
       if(cart.length === 0) {
-          container.innerHTML = '<p class="text-center text-gray-400 mt-10">Votre sac est vide.</p>';
+          container.innerHTML = '<p class="text-center opacity-30 mt-10 uppercase font-black text-xs tracking-widest">Sac Vide</p>';
           return;
       }
 
       container.innerHTML = cart.map((item, idx) => `
-        <div class="flex items-center gap-4 bg-gray-50 p-4 rounded-3xl border border-gray-100">
+        <div class="flex items-center gap-4 bg-gray-50 dark:bg-white/5 p-5 rounded-[30px]">
           <img src="${item.img}" class="w-16 h-16 object-contain bg-white rounded-2xl">
           <div class="flex-1">
               <div class="font-black text-[10px] uppercase italic leading-tight">${item.name}</div>
