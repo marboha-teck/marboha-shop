@@ -299,7 +299,6 @@
         </nav>
     </div>
 
-    <!-- حقيبة المشتريات المدمج بها فورم الإرسال السري لـ Web3Forms -->
     <div id="cart-drawer" class="glass-effect flex flex-col">
         <div class="p-5 border-b border-neutral-200/50 dark:border-neutral-800/50 flex justify-between items-center">
             <h3 class="font-bold text-base tracking-tight">VOTRE SAC</h3>
@@ -315,9 +314,7 @@
 
         <div id="cart-items" class="flex-1 overflow-y-auto p-4 space-y-3"></div>
 
-        <!-- فورم جمع البيانات والارتباط بالبريد الإلكتروني -->
         <form id="checkout-form" class="p-4 border-t border-neutral-200/50 dark:border-neutral-800/50 space-y-2.5">
-            <!-- مفتاح الوصول الخاص بـ Web3Forms (ضع مفتاحك هنا) -->
             <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY">
             <input type="hidden" name="subject" value="Nouvelle Commande - Marboha Shop">
             <input type="hidden" id="email-order-details" name="Commande_Details">
@@ -344,7 +341,6 @@
         </div>
     </div>
 
-    <!-- نافذة تفاصيل المنتج المودرن الصاعدة -->
     <div id="product-modal" class="glass-effect p-6 md:p-8 flex flex-col max-h-[85vh] overflow-y-auto">
         <div class="flex justify-between items-center mb-5">
             <span id="modal-category" class="text-[9px] bg-blue-500/10 text-blue-600 font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">Premium</span>
@@ -378,7 +374,6 @@
         </div>
     </div>
 
-    <!-- الهيدر الطافي الشفاف الأنيق -->
     <nav class="apple-nav glass-effect px-4 md:px-6 flex items-center justify-between gap-3">
         <button onclick="toggleSidebar(true)" class="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-xl transition shrink-0">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
@@ -396,13 +391,12 @@
         <div class="flex items-center gap-2 shrink-0">
             <button onclick="toggleTheme()" class="w-8 h-8 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 transition flex items-center justify-center text-md">🌓</button>
             <button onclick="toggleCart(true)" class="relative w-8 h-8 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 transition flex items-center justify-center">
-                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                 <span id="badge" class="absolute -top-1 -right-1 bg-blue-600 text-white text-[9px] w-4.5 h-4.5 rounded-full flex items-center justify-center hidden font-bold">0</span>
             </button>
         </div>
     </nav>
 
-    <!-- الواجهة الرئيسية -->
     <div id="home-view" class="view active pt-[120px]">
         <section class="hero-mesh">
             <div class="flex flex-col items-center justify-center gap-6 max-w-xl w-full z-10 px-4">
@@ -424,25 +418,33 @@
         </div>
     </div>
 
-    <!-- واجهة الدعم -->
+    <!-- واجهة الدعم الفني المحدثة (تم توزيع البطاقات في شبكة متناسقة لتضم البريد الإلكتروني بنجاح) -->
     <div id="support-view" class="view pt-32 px-4 md:px-6">
-        <div class="max-w-4xl mx-auto text-center">
+        <div class="max-w-5xl mx-auto text-center">
             <h2 class="text-3xl font-extrabold uppercase tracking-tight mb-10">SUPPORT HUB</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="product-card p-6 flex flex-col items-center">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="product-card p-6 flex flex-col items-center justify-center text-center">
                     <div class="text-3xl mb-3">💬</div>
-                    <h4 class="font-bold text-sm mb-1">WhatsApp Direct</h4>
-                    <a href="https://wa.me/212614783602" class="text-blue-600 font-bold text-xs uppercase tracking-wider mt-2 hover:underline">Ouvrir Chat →</a>
+                    <h4 class="font-bold text-xs md:text-sm mb-1">WhatsApp Direct</h4>
+                    <a href="https://wa.me/212614783602" target="_blank" class="text-blue-600 font-bold text-[11px] uppercase tracking-wider mt-2 hover:underline">Ouvrir Chat →</a>
                 </div>
-                <div class="product-card p-6 flex flex-col items-center">
+                <div class="product-card p-6 flex flex-col items-center justify-center text-center">
                     <div class="text-3xl mb-3">📸</div>
-                    <h4 class="font-bold text-sm mb-1">Instagram</h4>
-                    <a href="https://instagram.com/shop._.maroc7" class="text-blue-600 font-bold text-xs uppercase tracking-wider mt-2 hover:underline">Nous suivre →</a>
+                    <h4 class="font-bold text-xs md:text-sm mb-1">Instagram</h4>
+                    <a href="https://instagram.com/shop._.maroc7" target="_blank" class="text-blue-600 font-bold text-[11px] uppercase tracking-wider mt-2 hover:underline">Nous suivre →</a>
                 </div>
-                <div class="product-card p-6 flex flex-col items-center">
+                <!-- بطاقة البريد الإلكتروني المضافة حديثاً للموقع -->
+                <div class="product-card p-6 flex flex-col items-center justify-center text-center border-blue-500/20 shadow-sm bg-gradient-to-b from-blue-500/5 to-transparent">
+                    <div class="text-3xl mb-3">✉️</div>
+                    <h4 class="font-bold text-xs md:text-sm mb-1">Email Support</h4>
+                    <a href="mailto:contact@marbohatech.com" class="text-blue-600 font-bold text-[11px] uppercase tracking-wider mt-2 hover:underline">Nous Écrire →</a>
+                </div>
+                <div class="product-card p-6 flex flex-col items-center justify-center text-center">
                     <div class="text-3xl mb-3">🛡️</div>
-                    <h4 class="font-bold text-sm mb-1">Disponibilité</h4>
-                    <span class="text-emerald-500 font-bold text-xs uppercase tracking-wider mt-2">● En ligne</span>
+                    <h4 class="font-bold text-xs md:text-sm mb-1">Disponibilité</h4>
+                    <span class="text-emerald-500 font-bold text-[11px] uppercase tracking-wider mt-2 flex items-center gap-1.5 justify-center">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> En ligne
+                    </span>
                 </div>
             </div>
         </div>
@@ -641,7 +643,6 @@
             localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
         }
 
-        // دالة الدمج المزدوجة المحسنة: ترسل عبر الإيميل وتفتح الواتساب معاً تلقائياً
         function checkout() {
             const name = document.getElementById('cust-name').value.trim();
             const city = document.getElementById('cust-city').value.trim();
@@ -650,17 +651,14 @@
             if (cart.length === 0) { alert("Votre panier est vide !"); return; }
             if (!name || !city || !phone) { alert("Veuillez remplir vos informations !"); return; }
 
-            // 1. تجهيز تفاصيل نص المنتجات
             let detailsText = cart.map(item => `- ${item.name} (${item.color}) x${item.quantity}`).join('\n');
             let totalAmount = document.getElementById('total-price').innerText;
 
-            // 2. تحديث الحقل المخفي في فورم الإيميل وإرساله خلف الكواليس عبر Fetch API لـ Web3Forms
             document.getElementById('email-order-details').value = `\n${detailsText}\n\nTotal: ${totalAmount}`;
             
             const form = document.getElementById('checkout-form');
             const formData = new FormData(form);
 
-            // إرسال الإيميل في الخلفية دون تعطيل المستخدم
             fetch('https://api.web3forms.com/submit', {
                 method: 'POST',
                 body: formData
@@ -670,7 +668,6 @@
                 console.error("Erreur d'envoi d'email", error);
             });
 
-            // 3. فتح الواتساب مباشرة للزبون لإتمام التجربة المعتادة بنجاح
             let whatsappMsg = `🛍️ *NOUVELLE COMMANDE MARBOHA SHOP*\n\n`;
             whatsappMsg += `👤 *Client :* ${name}\n📍 *Ville :* ${city}\n📞 *WhatsApp :* ${phone}\n\n`;
             whatsappMsg += `📦 *Produits :*\n${detailsText}\n\n`;
