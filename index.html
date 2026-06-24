@@ -124,6 +124,8 @@
             font-weight: 600;
             font-size: 13px;
             margin-bottom: 6px;
+            width: 100%;
+            text-align: left;
         }
         .nav-item:hover {
             background: rgba(0, 113, 227, 0.08);
@@ -238,6 +240,7 @@
             color: var(--ios-text);
             border: 1px solid var(--border-color); 
             transition: all 0.3s ease; 
+            white-space: nowrap;
         }
         .cat-btn:hover {
             border-color: var(--ios-text);
@@ -331,7 +334,7 @@
         </div>
 
         <!-- بيانات الشحن والدفع السريع -->
-        <div id="checkout-form-container" class="p-4 border-t border-neutral-200/50 dark:border-neutral-800/50 space-y-2.5 hidden">
+        <div id="checkout-form-container" class="p-4 border-t border-neutral-200/50 dark:border-neutral-800/50 space-y-2.5">
             <p class="text-[10px] font-bold text-blue-600 uppercase tracking-wider">Informations de Validation</p>
             <div class="grid grid-cols-2 gap-2">
                 <input type="text" id="cust-name" placeholder="Nom Complet" class="w-full text-xs p-3 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white/50 dark:bg-black/50 focus:outline-none focus:border-blue-600 transition font-medium">
@@ -380,9 +383,9 @@
 
             <div>
                 <div class="flex items-center justify-center gap-4 bg-neutral-100 dark:bg-neutral-900 w-32 mx-auto py-1.5 px-2 rounded-xl border border-neutral-200/40 dark:border-neutral-800/40">
-                    <button onclick="changeQty(-1)" class="w-7 h-7 text-sm font-bold opacity-60 hover:opacity-100 transition">-</button>
+                    <button onclick="changeModalQty(-1)" class="w-7 h-7 text-sm font-bold opacity-60 hover:opacity-100 transition">-</button>
                     <span id="modal-qty" class="text-sm font-bold w-6 text-center">1</span>
-                    <button onclick="changeQty(1)" class="w-7 h-7 text-sm font-bold opacity-60 hover:opacity-100 transition">+</button>
+                    <button onclick="changeModalQty(1)" class="w-7 h-7 text-sm font-bold opacity-60 hover:opacity-100 transition">+</button>
                 </div>
             </div>
 
@@ -493,7 +496,7 @@
         const productsDB = [
             { id: 1, name: "Samsung 65W Trio", price: 75, category: "Power", img: "https://images.unsplash.com/photo-1622445262465-2481c4574875?auto=format&fit=crop&w=500&q=80", desc: "Chargeur ultra rapide d'origine équipé de 3 ports (2x USB-C, 1x USB-A) pour charger simultanément votre PC portable, smartphone et tablette.", colors: ["Noir", "Blanc"] },
             { id: 2, name: "Samsung 25W White", price: 50, category: "Power", img: "https://images.unsplash.com/photo-1609592424083-0599540b6e92?auto=format&fit=crop&w=500&q=80", desc: "Adaptateur secteur USB-C 25W délivrant la technologie Super Fast Charging pour recharger vos appareils Galaxy en un temps record.", colors: ["Blanc"] },
-            { id: 3, name: "Earbuds Crystal Pink", price: 95, category: "Audio", img: "crystal pink ear buds.png", desc: "Écouteeurs sans fil haut de gamme avec un design Crystal Rose magnifique. Son haute fidélité, réduction de bruit passive et batterie longue durée.", colors: ["Rose", "Blanc", "Noir"] },
+            { id: 3, name: "Earbuds Crystal Pink", price: 95, category: "Audio", img: "crystal pink ear buds.png", desc: "Écouteurs sans fil haut de gamme avec un design Crystal Rose magnifique. Son haute fidélité, réduction de bruit passive et batterie longue durée.", colors: ["Rose", "Blanc", "Noir"] },
             { id: 4, name: "Samsung 25W Black", price: 50, category: "Power", img: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=500&q=80", desc: "Le classique bloc de charge rapide Samsung 25W en couleur noire mate. Protection contre les surcharges et compacité optimale.", colors: ["Noir"] },
             { id: 5, name: "Galaxy Watch Ultra", price: 290, category: "Watch", img: "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=500&q=80", desc: "Montre connectée sportive ultime de chez Samsung. Suivi santé avancé, GPS double fréquence, écran ultra lumineux et autonomie de plusieurs jours.", colors: ["Titane", "Noir", "Orange"] }
         ];
@@ -509,8 +512,10 @@
                 let hours = Math.floor(time / 3600);
                 let minutes = Math.floor((time % 3600) / 60);
                 let seconds = time % 60;
-                document.getElementById('countdown').innerText = 
-                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                const countdownEl = document.getElementById('countdown');
+                if (countdownEl) {
+                    countdownEl.innerText = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                }
                 if (time > 0) time--;
             }, 1000);
         }
@@ -518,33 +523,78 @@
         function startLiveSalesSimulation() {
             const cities = ["Casablanca", "Rabat", "Marrakech", "Fès", "Tanger", "Agadir", "Kénitra", "Salé"];
             setInterval(() => {
+                if (productsDB.length === 0) return;
                 const randomCity = cities[Math.floor(Math.random() * cities.length)];
                 const randomProduct = productsDB[Math.floor(Math.random() * productsDB.length)];
                 const popup = document.getElementById('live-sales-popup');
+                const textEl = document.getElementById('live-sales-text');
                 
-                document.getElementById('live-sales-text').innerText = `Un client de ${randomCity} a acheté un ${randomProduct.name} 🔥`;
-                popup.classList.add('show');
-                
-                setTimeout(() => { popup.classList.remove('show'); }, 4000);
+                if (popup && textEl) {
+                    textEl.innerText = `Un client de ${randomCity} a acheté un ${randomProduct.name} 🔥`;
+                    popup.classList.add('show');
+                    setTimeout(() => { popup.classList.remove('show'); }, 4000);
+                }
             }, 25000);
         }
 
         function handleSearch() {
             const query = document.getElementById('search-input').value.toLowerCase().trim();
             document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById('cat-all').classList.add('active');
+            const catAll = document.getElementById('cat-all');
+            if (catAll) catAll.classList.add('active');
 
             if(query === "") {
-                render(productsDB);
+                renderProducts(productsDB);
                 return;
             }
             const filtered = productsDB.filter(p => p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query));
-            render(filtered);
+            renderProducts(filtered);
+        }
+
+        function filterItems(category) {
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            const activeBtn = document.getElementById(`cat-${category}`);
+            if (activeBtn) activeBtn.classList.add('active');
+
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) searchInput.value = "";
+
+            if (category === 'all') {
+                renderProducts(productsDB);
+            } else {
+                const filtered = productsDB.filter(p => p.category === category);
+                renderProducts(filtered);
+            }
+        }
+
+        function renderProducts(list) {
+            const grid = document.getElementById('products-grid');
+            if (!grid) return;
+            if (list.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-sm opacity-50">Aucun produit trouvé</div>`;
+                return;
+            }
+            grid.innerHTML = list.map(p => `
+                <div class="product-card p-4 flex flex-col justify-between cursor-pointer" onclick="openProductModal(${p.id})">
+                    <div class="aspect-square bg-neutral-100 dark:bg-neutral-900 rounded-2xl p-3 flex items-center justify-center mb-4 overflow-hidden border border-neutral-200/20 dark:border-neutral-800/20">
+                        <img src="${p.img}" alt="${p.name}" class="max-h-full object-contain transition duration-300 hover:scale-105">
+                    </div>
+                    <div>
+                        <span class="text-[9px] font-bold opacity-40 uppercase tracking-wider">${p.category}</span>
+                        <h4 class="font-bold text-xs md:text-sm tracking-tight truncate mt-0.5">${p.name}</h4>
+                        <div class="flex items-center justify-between mt-3">
+                            <span class="text-blue-600 font-extrabold text-sm">${p.price} DH</span>
+                            <span class="text-[10px] font-bold bg-neutral-100 dark:bg-neutral-900 px-2 py-1 rounded-lg">Voir →</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
         }
 
         function go(id) {
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
+            const targetView = document.getElementById(id);
+            if (targetView) targetView.classList.add('active');
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
@@ -558,8 +608,16 @@
             document.getElementById('overlay').classList.toggle('active', s);
         }
 
+        function closeAll() {
+            toggleSidebar(false);
+            toggleCart(false);
+            document.getElementById('product-modal').classList.remove('open');
+            document.getElementById('overlay').classList.remove('active');
+        }
+
         function openProductModal(id) {
             const p = productsDB.find(x => x.id === id);
+            if (!p) return;
             currentSelectedProduct = p;
             currentQty = 1;
             currentSelectedColor = p.colors[0];
@@ -573,7 +631,7 @@
 
             const colorsContainer = document.getElementById('modal-colors');
             colorsContainer.innerHTML = p.colors.map((color, index) => `
-                <button onclick="selectColor('${color}', this)" class="color-opt px-3 py-1.5 rounded-xl border text-[11px] font-bold transition-all ${index === 0 ? 'bg-blue-600 text-white border-blue-600 scale-105' : 'bg-neutral-100 dark:bg-neutral-900'}">
+                <button onclick="selectColor('${color}', this)" class="color-opt px-3 py-1.5 rounded-xl border text-[11px] font-bold transition-all ${index === 0 ? 'bg-blue-600 text-white border-blue-600 scale-105' : 'bg-neutral-100 dark:bg-neutral-900 border-transparent'}">
                     ${color}
                 </button>
             `).join('');
@@ -586,217 +644,152 @@
             currentSelectedColor = color;
             document.querySelectorAll('.color-opt').forEach(b => {
                 b.classList.remove('bg-blue-600', 'text-white', 'border-blue-600', 'scale-105');
-                b.classList.add('bg-neutral-100', 'dark:bg-neutral-900');
+                b.classList.add('bg-neutral-100', 'dark:bg-neutral-900', 'border-transparent');
             });
+            btn.classList.remove('bg-neutral-100', 'dark:bg-neutral-900', 'border-transparent');
             btn.classList.add('bg-blue-600', 'text-white', 'border-blue-600', 'scale-105');
         }
 
-        function changeQty(amt) {
-            currentQty += amt;
+        function changeModalQty(offset) {
+            currentQty += offset;
             if (currentQty < 1) currentQty = 1;
             document.getElementById('modal-qty').innerText = currentQty;
         }
 
         function addModalItemToCart() {
-            if(!currentSelectedProduct) return;
-            addItemToCartBackend(currentSelectedProduct.id, currentSelectedColor, currentQty);
-            closeAll();
-            showToast();
-            setTimeout(() => toggleCart(true), 400);
-        }
-
-        function addItemToCartBackend(id, color, qty) {
-            const prod = productsDB.find(x => x.id === id);
-            const existingItem = cart.find(item => item.id === id && item.chosenColor === color);
-
-            if(existingItem) {
-                existingItem.quantity += qty;
-            } else {
-                cart.push({ ...prod, chosenColor: color || prod.colors[0], quantity: qty });
-            }
-            updateCart();
-        }
-
-        function quickBuyWhatsApp(id, event) {
-            event.stopPropagation();
-            const p = productsDB.find(x => x.id === id);
-            const text = `Bonjour MARBOHA SHOP, je souhaite acheter directement ce produit :\n- ${p.name} (Prix: ${p.price} DH) x1`;
-            window.open(`https://wa.me/212614783602?text=${encodeURIComponent(text)}`);
-        }
-
-        function closeAll() {
-            toggleSidebar(false);
-            toggleCart(false);
-            document.getElementById('product-modal').classList.remove('open');
-            document.getElementById('overlay').classList.remove('active');
-        }
-
-        function toggleTheme() {
-            document.body.classList.toggle('dark-mode');
-        }
-
-        function filterItems(cat) {
-            document.getElementById('search-input').value = "";
-            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-            const activeBtn = document.getElementById(`cat-${cat}`);
-            if(activeBtn) activeBtn.classList.add('active');
+            if (!currentSelectedProduct) return;
             
-            const filtered = cat === 'all' ? productsDB : productsDB.filter(p => p.category === cat);
-            render(filtered);
+            const existing = cart.find(item => item.id === currentSelectedProduct.id && item.color === currentSelectedColor);
+            if (existing) {
+                existing.quantity += currentQty;
+            } else {
+                cart.push({
+                    id: currentSelectedProduct.id,
+                    name: currentSelectedProduct.name,
+                    price: currentSelectedProduct.price,
+                    img: currentSelectedProduct.img,
+                    color: currentSelectedColor,
+                    quantity: currentQty
+                });
+            }
+            
+            showToast();
+            updateCartUI();
+            closeAll();
+            toggleCart(true);
         }
 
-        function render(data = productsDB) {
-            const grid = document.getElementById('products-grid');
-            if(data.length === 0) {
-                grid.innerHTML = '<div class="col-span-4 text-center font-semibold opacity-40 py-10 text-xs">Aucun produit trouvé</div>';
+        function updateCartUI() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const badge = document.getElementById('badge');
+            
+            const totalQty = cart.reduce((sum, item) => sum + item.quantity, 0);
+            if (totalQty > 0) {
+                badge.innerText = totalQty;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `<div class="text-center py-12 text-xs opacity-40">Votre sac est vide</div>`;
+                document.getElementById('subtotal-price').innerText = "0 DH";
+                document.getElementById('total-price').innerText = "0 DH";
+                updateShippingBar(0);
                 return;
             }
-            grid.innerHTML = data.map(p => `
-                <div class="product-card p-4 flex flex-col justify-between" onclick="openProductModal(${p.id})">
-                    <div>
-                        <div class="h-28 md:h-36 flex items-center justify-center mb-3 bg-white dark:bg-neutral-900 rounded-2xl p-2 border border-neutral-100 dark:border-neutral-800/40">
-                            <img src="${p.img}" class="max-h-full object-contain rounded-xl hover:scale-105 transition duration-500" onerror="this.src='https://placehold.co/400x400/1d1d1f/ffffff?text=Produit'">
+
+            let subtotal = 0;
+            cartItemsContainer.innerHTML = cart.map((item, index) => {
+                subtotal += item.price * item.quantity;
+                return `
+                    <div class="flex items-center gap-3 p-3 bg-white/50 dark:bg-black/50 border border-neutral-200/40 dark:border-neutral-800/40 rounded-2xl relative">
+                        <img src="${item.img}" class="w-16 h-16 object-contain bg-neutral-100 dark:bg-neutral-900 p-1 rounded-xl">
+                        <div class="flex-1 min-w-0">
+                            <h5 class="font-bold text-xs truncate">${item.name}</h5>
+                            <p class="text-[10px] opacity-50 mt-0.5">Couleur: ${item.color}</p>
+                            <div class="flex items-center justify-between mt-2">
+                                <span class="text-xs font-extrabold text-blue-600">${item.price * item.quantity} DH</span>
+                                <div class="flex items-center bg-neutral-100 dark:bg-neutral-900 rounded-lg px-1 py-0.5">
+                                    <button onclick="changeCartQty(${index}, -1)" class="px-1.5 text-xs font-bold opacity-60 hover:opacity-100">-</button>
+                                    <span class="px-2 text-xs font-bold">${item.quantity}</span>
+                                    <button onclick="changeCartQty(${index}, 1)" class="px-1.5 text-xs font-bold opacity-60 hover:opacity-100">+</button>
+                                </div>
+                            </div>
                         </div>
-                        <h3 class="font-bold text-[11px] md:text-xs uppercase mb-0.5 tracking-tight line-clamp-1">${p.name}</h3>
-                        <p class="text-blue-600 font-extrabold text-xs md:text-sm mb-3">${p.price} DH</p>
                     </div>
-                    <div class="grid grid-cols-5 gap-1.5 mt-auto">
-                        <button onclick="openProductModal(${p.id}); event.stopPropagation();" class="col-span-2 bg-black/5 dark:bg-white/5 hover:bg-blue-600 hover:text-white transition py-2 rounded-xl text-[9px] font-bold uppercase">Infos</button>
-                        <button onclick="quickBuyWhatsApp(${p.id}, event)" class="col-span-3 bg-emerald-600 text-white hover:bg-emerald-700 transition py-2 rounded-xl text-[9px] font-bold uppercase tracking-tight">⚡ Acheter</button>
-                    </div>
-                </div>`).join('');
+                `;
+            }).join('');
+
+            document.getElementById('subtotal-price').innerText = `${subtotal} DH`;
+            document.getElementById('total-price').innerText = `${subtotal} DH`;
+            updateShippingBar(subtotal);
+        }
+
+        function changeCartQty(index, offset) {
+            cart[index].quantity += offset;
+            if (cart[index].quantity <= 0) cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function updateShippingBar(subtotal) {
+            const target = 200;
+            const progress = document.getElementById('shipping-progress');
+            const text = document.getElementById('shipping-text');
+            const shippingPrice = document.getElementById('shipping-price');
+
+            if (subtotal >= target) {
+                progress.style.width = "100%";
+                text.innerText = "🎉 Vous bénéficiez de la livraison gratuite !";
+                shippingPrice.innerText = "Gratuite";
+            } else {
+                const needed = target - subtotal;
+                const pct = (subtotal / target) * 100;
+                progress.style.width = `${pct}%`;
+                text.innerText = `Plus que ${needed} DH pour livraison gratuite`;
+                shippingPrice.innerText = "0 DH";
+            }
         }
 
         function showToast() {
             const toast = document.getElementById('toast-notif');
             toast.classList.add('show');
-            setTimeout(() => { toast.classList.remove('show'); }, 2000);
+            setTimeout(() => { toast.classList.remove('show'); }, 2500);
         }
 
-        function updateCart() {
-            var badge = document.getElementById('badge');
-            var totalItemsCount = cart.reduce(function(sum, item) { return sum + item.quantity; }, 0);
-            badge.innerText = totalItemsCount;
-            badge.classList.toggle('hidden', totalItemsCount === 0);
-
-            var subtotal = cart.reduce(function(sum, item) { return sum + (item.price * item.quantity); }, 0);
-            document.getElementById('subtotal-price').innerText = subtotal + " DH";
-            
-            var shippingLimit = 200;
-            var progress = (subtotal / shippingLimit) * 100;
-            if(progress > 100) progress = 100;
-            document.getElementById('shipping-progress').style.width = progress + '%';
-            
-            var shippingPrice = 0;
-            if(subtotal > 0 && subtotal < shippingLimit) {
-                shippingPrice = 25;
-                document.getElementById('shipping-text').innerText = "Plus que " + (shippingLimit - subtotal) + " DH pour livraison gratuite !";
-            } else if (subtotal >= shippingLimit) {
-                shippingPrice = 0;
-                document.getElementById('shipping-text').innerText = "🎉 Félicitations ! Livraison Gratuite Offerte";
-            }
-            document.getElementById('shipping-price').innerText = shippingPrice === 0 ? "Gratuit" : shippingPrice + " DH";
-
-            var discount = 0;
-            if(totalItemsCount === 2) {
-                discount = Math.round(subtotal * 0.05);
-            } else if (totalItemsCount >= 3) {
-                discount = Math.round(subtotal * 0.10);
-            }
-
-            var discountRow = document.getElementById('discount-row');
-            if(discount > 0) {
-                discountRow.classList.remove('hidden');
-                document.getElementById('discount-price').innerText = "-" + discount + " DH";
-            } else {
-                discountRow.classList.add('hidden');
-            }
-
-            var finalTotal = (subtotal - discount) + shippingPrice;
-            document.getElementById('total-price').innerText = finalTotal + " DH";
-            
-            var container = document.getElementById('cart-items');
-            var checkoutForm = document.getElementById('checkout-form-container');
-            var crossSellSec = document.getElementById('cross-sell-section');
-
-            if(cart.length === 0) {
-                container.innerHTML = '<div class="flex flex-col items-center justify-center h-full text-center opacity-30 py-12"><span class="text-3xl mb-3">🛒</span><p class="font-bold uppercase text-[10px] tracking-widest">Le sac est vide</p></div>';
-                checkoutForm.classList.add('hidden');
-                crossSellSec.classList.add('hidden');
-                return;
-            }
-
-            checkoutForm.classList.remove('hidden');
-            crossSellSec.classList.remove('hidden');
-
-            var cartHTML = '';
-            for (var i = 0; i < cart.length; i++) {
-                var item = cart[i];
-                cartHTML += `
-                    <div class="flex items-center gap-3 bg-neutral-100/50 dark:bg-white/5 p-3 rounded-2xl border border-neutral-200/20">
-                        <img src="${item.img}" class="w-11 h-11 object-contain bg-white rounded-xl shadow-sm border">
-                        <div class="flex-1 text-left">
-                            <div class="font-bold text-[11px] uppercase tracking-tight text-neutral-800 dark:text-white line-clamp-1">${item.name}</div>
-                            <div class="text-[10px] font-semibold mt-1 flex gap-2 items-center">
-                                <span class="text-blue-600 font-bold">Qte: ${item.quantity}</span>
-                                <span class="opacity-40">| ${item.chosenColor || 'Standard'}</span>
-                            </div>
-                        </div>
-                        <div class="text-xs font-extrabold mr-2">${item.price * item.quantity} DH</div>
-                        <button onclick="event.stopPropagation(); cart.splice(${i}, 1); updateCart();" class="opacity-30 hover:opacity-100 hover:text-red-500 text-lg px-1 transition">&times;</button>
-                    </div>`;
-            }
-            container.innerHTML = cartHTML;
-            renderCrossSell();
-        }
-
-        function renderCrossSell() {
-            const currentCartIds = cart.map(x => x.id);
-            const suggestions = productsDB.filter(x => !currentCartIds.includes(x.id));
-            const crossContainer = document.getElementById('cross-sell-items');
-            if(suggestions.length === 0) {
-                document.getElementById('cross-sell-section').classList.add('hidden');
-                return;
-            }
-            crossContainer.innerHTML = suggestions.slice(0, 3).map(p => `
-                <div class="flex items-center gap-2 bg-white dark:bg-neutral-900 p-2 rounded-xl min-w-[165px] border shadow-sm">
-                    <img src="${p.img}" class="w-8 h-8 object-contain rounded-lg bg-neutral-50 p-0.5 border">
-                    <div class="flex-1 text-left">
-                        <p class="text-[9px] font-bold uppercase tracking-tight line-clamp-1">${p.name}</p>
-                        <p class="text-[9px] font-extrabold text-blue-600">${p.price} DH</p>
-                    </div>
-                    <button onclick="addItemToCartBackend(${p.id}, '${p.colors[0]}', 1)" class="bg-blue-600 text-white font-bold text-xs w-6 h-6 rounded-lg hover:scale-105 transition flex items-center justify-center">+</button>
-                </div>`).join('');
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
         }
 
         function checkout() {
-            if(cart.length === 0) return;
             const name = document.getElementById('cust-name').value.trim();
             const city = document.getElementById('cust-city').value.trim();
             const phone = document.getElementById('cust-phone').value.trim();
 
-            if(!name || !city || !phone) {
-                alert("S'il vous plaît, remplissez toutes vos informations de livraison !");
+            if (cart.length === 0) {
+                alert("Votre panier est vide !");
                 return;
             }
-            
-            let details = cart.map(item => `- ${item.name} (${item.chosenColor}) x${item.quantity}`).join('\n');
-            let msg = `🛍️ *NOUVELLE COMMANDE MARBOHA SHOP*\n\n`;
-            msg += `👤 *Client :* ${name}\n📍 *Ville :* ${city}\n📞 *Téléphone :* ${phone}\n\n`;
-            msg += `📦 *Produits :*\n${details}\n\n`;
-            msg += `💰 *Sous-total :* ${document.getElementById('subtotal-price').innerText}\n`;
-            if(!document.getElementById('discount-row').classList.contains('hidden')) {
-                msg += `🏷️ *Remise :* ${document.getElementById('discount-price').innerText}\n`;
+            if (!name || !city || !phone) {
+                alert("S'il vous plaît, remplissez vos informations de validation !");
+                return;
             }
-            msg += `🚚 *Livraison :* ${document.getElementById('shipping-price').innerText}\n`;
-            msg += `⭐ *TOTAL À PAYER :* ${document.getElementById('total-price').innerText}`;
+
+            let details = cart.map(item => `- ${item.name} (${item.color}) x${item.quantity}`).join('\n');
+            let msg = `🛍️ *NOUVELLE COMMANDE MARBOHA SHOP*\n\n`;
+            msg += `👤 *Client :* ${name}\n📍 *Ville :* ${city}\n📞 *WhatsApp :* ${phone}\n\n`;
+            msg += `📦 *Produits :*\n${details}\n\n`;
+            msg += `💰 *MONTANT TOTAL :* ${document.getElementById('total-price').innerText}`;
 
             window.open(`https://wa.me/212614783602?text=${encodeURIComponent(msg)}`);
         }
 
         window.onload = () => {
-            render();
-            updateCart();
+            if (localStorage.getItem('theme') === 'dark') {
+                document.body.classList.add('dark-mode');
+            }
+            renderProducts(productsDB);
             startCountdown();
             startLiveSalesSimulation();
         };
