@@ -44,7 +44,6 @@
             background: var(--apple-blue);
         }
 
-        /* تأثير الزجاج الشفاف الاحترافي */
         .glass-effect {
             background: var(--card-bg);
             backdrop-filter: blur(var(--blur-val));
@@ -52,7 +51,6 @@
             border: 1px solid var(--border-color);
         }
 
-        /* خلفية الهيرو المتحركة الفاخرة */
         .hero-mesh {
             min-height: 75vh;
             width: 100%;
@@ -88,7 +86,6 @@
             filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
         }
 
-        /* القائمة الجانبية والسلة كقطع زجاجية تطفو */
         #sidebar, #cart-drawer {
             position: fixed;
             top: 0;
@@ -133,7 +130,6 @@
             transform: translateX(4px);
         }
 
-        /* الهيدر الطافي الأنيق */
         .apple-nav {
             position: fixed;
             top: 45px;
@@ -148,7 +144,6 @@
             transition: all 0.3s ease;
         }
 
-        /* نافذة تفاصيل المنتج الصاعدة */
         #product-modal {
             position: fixed;
             bottom: 20px;
@@ -192,7 +187,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* جمالية التنبيهات */
         #toast-notif, #live-sales-popup {
             position: fixed;
             background: var(--card-bg);
@@ -230,7 +224,6 @@
 
         .no-scrollbar::-webkit-scrollbar { display: none; }
         
-        /* فلاتر التصنيفات الأنيقة */
         .cat-btn { 
             padding: 8px 20px; 
             border-radius: 50px; 
@@ -253,7 +246,6 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
 
-        /* كروت المنتجات المستديرة والانسيابية */
         .product-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -272,12 +264,10 @@
     <div class="overlay" id="overlay" onclick="closeAll()"></div>
     <div id="toast-notif" class="flex items-center gap-2"><span>✨</span> Sac mis à jour</div>
 
-    <!-- شريط العد التنازلي الترويجي المصمم بأناقة ناعمة -->
     <div class="fixed top-0 left-0 w-full h-[35px] bg-neutral-900 text-neutral-300 flex items-center justify-center text-[10px] md:text-xs font-semibold tracking-widest z-[5000] px-4 select-none border-b border-white/5">
         ⚡ OFFRE FLASH LIMITÉE : <span id="countdown" class="ml-2 bg-white/10 px-2 py-0.5 rounded font-mono text-white font-bold text-xs">02:00:00</span>
     </div>
 
-    <!-- نافذة المبيعات الحية التفاعلية -->
     <div id="live-sales-popup" class="flex items-center gap-3">
         <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shrink-0"></div>
         <div class="flex-1 text-left">
@@ -286,7 +276,6 @@
         </div>
     </div>
 
-    <!-- القائمة الجانبية الزجاجية -->
     <div id="sidebar" class="glass-effect flex flex-col p-6">
         <div class="flex justify-between items-center mb-10">
             <h3 class="font-bold text-lg tracking-tight">MARBOHA <span class="text-blue-600">SHOP</span></h3>
@@ -310,14 +299,13 @@
         </nav>
     </div>
 
-    <!-- حقيبة المشتريات الزجاجية الجانبية -->
+    <!-- حقيبة المشتريات المدمج بها فورم الإرسال السري لـ Web3Forms -->
     <div id="cart-drawer" class="glass-effect flex flex-col">
         <div class="p-5 border-b border-neutral-200/50 dark:border-neutral-800/50 flex justify-between items-center">
             <h3 class="font-bold text-base tracking-tight">VOTRE SAC</h3>
             <button onclick="closeAll()" class="w-8 h-8 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center font-normal text-lg opacity-60 hover:opacity-100 transition">&times;</button>
         </div>
 
-        <!-- شريط تحفيز التوصيل المجاني -->
         <div id="shipping-bar-container" class="p-4 bg-neutral-100/50 dark:bg-neutral-900/40 border-b border-neutral-200/50 dark:border-neutral-800/50">
             <p id="shipping-text" class="text-[11px] font-bold text-center opacity-70 mb-2">Plus que 200 DH pour livraison gratuite</p>
             <div class="w-full bg-neutral-200 dark:bg-neutral-800 h-1.5 rounded-full overflow-hidden">
@@ -327,27 +315,24 @@
 
         <div id="cart-items" class="flex-1 overflow-y-auto p-4 space-y-3"></div>
 
-        <!-- المنتجات المقترحة الذكية -->
-        <div id="cross-sell-section" class="p-4 border-t border-neutral-200/50 dark:border-neutral-800/50 bg-neutral-100/30 dark:bg-neutral-900/20 hidden">
-            <p class="text-[10px] font-bold opacity-40 uppercase tracking-wider mb-2.5">Complétez votre style</p>
-            <div id="cross-sell-items" class="flex gap-2.5 overflow-x-auto pb-1 no-scrollbar"></div>
-        </div>
+        <!-- فورم جمع البيانات والارتباط بالبريد الإلكتروني -->
+        <form id="checkout-form" class="p-4 border-t border-neutral-200/50 dark:border-neutral-800/50 space-y-2.5">
+            <!-- مفتاح الوصول الخاص بـ Web3Forms (ضع مفتاحك هنا) -->
+            <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY">
+            <input type="hidden" name="subject" value="Nouvelle Commande - Marboha Shop">
+            <input type="hidden" id="email-order-details" name="Commande_Details">
 
-        <!-- بيانات الشحن والدفع السريع -->
-        <div id="checkout-form-container" class="p-4 border-t border-neutral-200/50 dark:border-neutral-800/50 space-y-2.5">
             <p class="text-[10px] font-bold text-blue-600 uppercase tracking-wider">Informations de Validation</p>
             <div class="grid grid-cols-2 gap-2">
-                <input type="text" id="cust-name" placeholder="Nom Complet" class="w-full text-xs p-3 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white/50 dark:bg-black/50 focus:outline-none focus:border-blue-600 transition font-medium">
-                <input type="text" id="cust-city" placeholder="Ville" class="w-full text-xs p-3 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white/50 dark:bg-black/50 focus:outline-none focus:border-blue-600 transition font-medium">
+                <input type="text" id="cust-name" name="Nom_Client" placeholder="Nom Complet" required class="w-full text-xs p-3 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white/50 dark:bg-black/50 focus:outline-none focus:border-blue-600 transition font-medium">
+                <input type="text" id="cust-city" name="Ville" placeholder="Ville" required class="w-full text-xs p-3 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white/50 dark:bg-black/50 focus:outline-none focus:border-blue-600 transition font-medium">
             </div>
-            <input type="tel" id="cust-phone" placeholder="Numéro WhatsApp (Ex: 0612345678)" class="w-full text-xs p-3 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white/50 dark:bg-black/50 focus:outline-none focus:border-blue-600 transition font-medium">
-        </div>
+            <input type="tel" id="cust-phone" name="WhatsApp" placeholder="Numéro WhatsApp (Ex: 0612345678)" required class="w-full text-xs p-3 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white/50 dark:bg-black/50 focus:outline-none focus:border-blue-600 transition font-medium">
+        </form>
 
-        <!-- ملخص الحساب وأزرار التأكيد للطلب -->
         <div class="p-5 border-t border-neutral-200/50 dark:border-neutral-800/50 bg-neutral-50/50 dark:bg-neutral-950/50">
             <div class="space-y-1.5 mb-4 text-xs font-medium">
                 <div class="flex justify-between opacity-60"><span>Sous-total</span><span id="subtotal-price">0 DH</span></div>
-                <div id="discount-row" class="flex justify-between text-emerald-500 hidden"><span>Remise de quantité</span><span id="discount-price">-0 DH</span></div>
                 <div class="flex justify-between opacity-60"><span>Frais de livraison</span><span id="shipping-price">0 DH</span></div>
                 <div class="h-[1px] bg-neutral-200 dark:bg-neutral-800 my-2"></div>
                 <div class="flex justify-between items-center">
@@ -355,7 +340,7 @@
                     <span id="total-price" class="text-lg font-extrabold text-blue-600">0 DH</span>
                 </div>
             </div>
-            <button onclick="checkout()" class="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold text-xs tracking-wider transition duration-300 shadow-md">CONFIRMER VIA WHATSAPP</button>
+            <button onclick="checkout()" class="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold text-xs tracking-wider transition duration-300 shadow-md">CONFIRMER LA COMMANDE</button>
         </div>
     </div>
 
@@ -393,7 +378,7 @@
         </div>
     </div>
 
-    <!-- الهيدر الطافي الشفاف الأنيق (Floating Apple Bar) -->
+    <!-- الهيدر الطافي الشفاف الأنيق -->
     <nav class="apple-nav glass-effect px-4 md:px-6 flex items-center justify-between gap-3">
         <button onclick="toggleSidebar(true)" class="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-xl transition shrink-0">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
@@ -403,7 +388,6 @@
             <span class="text-sm font-black tracking-tight uppercase">MARBOHA <span class="text-blue-600">SHOP</span></span>
         </div>
 
-        <!-- محرك البحث المدمج في قلب الهيدر بسلاسة -->
         <div class="flex-1 max-w-sm relative">
             <input type="text" id="search-input" oninput="handleSearch()" placeholder="Rechercher un produit..." class="w-full text-xs font-semibold pl-8 pr-4 py-2 rounded-xl bg-black/5 dark:bg-white/5 border border-transparent focus:outline-none focus:border-blue-500/30 transition">
             <span class="absolute left-2.5 top-2.5 opacity-30 text-xs">🔍</span>
@@ -418,21 +402,17 @@
         </div>
     </nav>
 
-    <!-- الواجهة الرئيسية للمتجر -->
+    <!-- الواجهة الرئيسية -->
     <div id="home-view" class="view active pt-[120px]">
-        <!-- قسم الهيرو المعدل ليحتوي على الصورة تحت العنوان -->
         <section class="hero-mesh">
             <div class="flex flex-col items-center justify-center gap-6 max-w-xl w-full z-10 px-4">
                 <h1 class="hero-title">MARBOHA<br>SHOP</h1>
-                
-                <!-- الصورة المضافة تحت العنوان مباشرة مع تأثير زجاجي ناعم وانحناء كامل للحواف -->
                 <div class="w-full max-w-md aspect-[16/9] rounded-2xl overflow-hidden border border-white/10 shadow-2xl backdrop-blur-sm bg-white/5 p-1 hover:scale-[1.02] transition duration-500">
                     <img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=800&q=80" alt="Marboha Banner" class="w-full h-full object-cover rounded-xl">
                 </div>
             </div>
         </section>
 
-        <!-- شبكة المنتجات بتأثير غامق أو فاتح هادئ -->
         <div id="catalog" class="max-w-6xl mx-auto py-12 px-4 md:px-6">
             <div class="flex gap-2.5 mb-8 overflow-x-auto pb-3 no-scrollbar">
                 <button onclick="filterItems('all')" class="cat-btn active" id="cat-all">Tout</button>
@@ -440,34 +420,11 @@
                 <button onclick="filterItems('Audio')" class="cat-btn" id="cat-Audio">Audio</button>
                 <button onclick="filterItems('Watch')" class="cat-btn" id="cat-Watch">Montres</button>
             </div>
-            
             <div id="products-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6"></div>
         </div>
-
-        <!-- قسم آراء الزبائن المقسم هندسياً بشكل منسق -->
-        <section class="py-14 px-4 md:px-6 border-t border-neutral-200/40 dark:border-neutral-800/40 bg-neutral-100/20 dark:bg-neutral-900/10">
-            <div class="max-w-5xl mx-auto text-center">
-                <h3 class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-3">Témoignages</h3>
-                <h2 class="text-xl md:text-2xl font-extrabold tracking-tight mb-10 uppercase">Ce que disent nos clients ⭐⭐⭐⭐⭐</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                    <div class="product-card p-5 text-left flex flex-col justify-between">
-                        <p class="text-neutral-500 dark:text-neutral-300 text-xs italic leading-relaxed mb-4">"Livraison très rapide à Rabat. Le chargeur Samsung 65W est 100% original, il charge mon PC et mon téléphone en même temps sans chauffer. Je recommande Marboha Shop !"</p>
-                        <span class="text-[10px] font-bold text-blue-600 uppercase tracking-wider">— Othmane R. (Rabat)</span>
-                    </div>
-                    <div class="product-card p-5 text-left flex flex-col justify-between">
-                        <p class="text-neutral-500 dark:text-neutral-300 text-xs italic leading-relaxed mb-4">"Les écouteurs Crystal Pink sont magnifiques ! Design transparent haut de gamme et le son est super propre. Service client WhatsApp au top."</p>
-                        <span class="text-[10px] font-bold text-blue-600 uppercase tracking-wider">— Salma T. (Casablanca)</span>
-                    </div>
-                    <div class="product-card p-5 text-left flex flex-col justify-between">
-                        <p class="text-neutral-500 dark:text-neutral-300 text-xs italic leading-relaxed mb-4">"Top produit et emballage bien soigné. La montre connectée fonctionne permanence avec mon Galaxy. Prix imbattable au Maroc."</p>
-                        <span class="text-[10px] font-bold text-blue-600 uppercase tracking-wider">— Youssef M. (Tanger)</span>
-                    </div>
-                </div>
-            </div>
-        </section>
     </div>
 
-    <!-- صفحة الدعم والاتصال المحدثة برمزيتها الفاخرة -->
+    <!-- واجهة الدعم -->
     <div id="support-view" class="view pt-32 px-4 md:px-6">
         <div class="max-w-4xl mx-auto text-center">
             <h2 class="text-3xl font-extrabold uppercase tracking-tight mb-10">SUPPORT HUB</h2>
@@ -491,14 +448,13 @@
         </div>
     </div>
 
-    <!-- الكود البرمجي التفاعلي الكامل والمحسن بالكامل -->
     <script>
         const productsDB = [
-            { id: 1, name: "Samsung 65W Trio", price: 75, category: "Power", img: "https://images.unsplash.com/photo-1622445262465-2481c4574875?auto=format&fit=crop&w=500&q=80", desc: "Chargeur ultra rapide d'origine équipé de 3 ports (2x USB-C, 1x USB-A) pour charger simultanément votre PC portable, smartphone et tablette.", colors: ["Noir", "Blanc"] },
-            { id: 2, name: "Samsung 25W White", price: 50, category: "Power", img: "https://images.unsplash.com/photo-1609592424083-0599540b6e92?auto=format&fit=crop&w=500&q=80", desc: "Adaptateur secteur USB-C 25W délivrant la technologie Super Fast Charging pour recharger vos appareils Galaxy en un temps record.", colors: ["Blanc"] },
-            { id: 3, name: "Earbuds Crystal Pink", price: 95, category: "Audio", img: "crystal pink ear buds.png", desc: "Écouteurs sans fil haut de gamme avec un design Crystal Rose magnifique. Son haute fidélité, réduction de bruit passive et batterie longue durée.", colors: ["Rose", "Blanc", "Noir"] },
-            { id: 4, name: "Samsung 25W Black", price: 50, category: "Power", img: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=500&q=80", desc: "Le classique bloc de charge rapide Samsung 25W en couleur noire mate. Protection contre les surcharges et compacité optimale.", colors: ["Noir"] },
-            { id: 5, name: "Galaxy Watch Ultra", price: 290, category: "Watch", img: "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=500&q=80", desc: "Montre connectée sportive ultime de chez Samsung. Suivi santé avancé, GPS double fréquence, écran ultra lumineux et autonomie de plusieurs jours.", colors: ["Titane", "Noir", "Orange"] }
+            { id: 1, name: "Samsung 65W Trio", price: 75, category: "Power", img: "https://images.unsplash.com/photo-1622445262465-2481c4574875?auto=format&fit=crop&w=500&q=80", desc: "Chargeur ultra rapide d'origine équipé de 3 ports.", colors: ["Noir", "Blanc"] },
+            { id: 2, name: "Samsung 25W White", price: 50, category: "Power", img: "https://images.unsplash.com/photo-1609592424083-0599540b6e92?auto=format&fit=crop&w=500&q=80", desc: "Adaptateur secteur USB-C 25W Super Fast Charging.", colors: ["Blanc"] },
+            { id: 3, name: "Earbuds Crystal Pink", price: 95, category: "Audio", img: "crystal pink ear buds.png", desc: "Écouteurs sans fil haut de gamme design transparent.", colors: ["Rose", "Blanc", "Noir"] },
+            { id: 4, name: "Samsung 25W Black", price: 50, category: "Power", img: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=500&q=80", desc: "Bloc de charge rapide Samsung 25W noir.", colors: ["Noir"] },
+            { id: 5, name: "Galaxy Watch Ultra", price: 290, category: "Watch", img: "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=500&q=80", desc: "Montre connectée sportive ultime.", colors: ["Titane", "Noir", "Orange"] }
         ];
 
         let cart = [];
@@ -512,10 +468,7 @@
                 let hours = Math.floor(time / 3600);
                 let minutes = Math.floor((time % 3600) / 60);
                 let seconds = time % 60;
-                const countdownEl = document.getElementById('countdown');
-                if (countdownEl) {
-                    countdownEl.innerText = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                }
+                document.getElementById('countdown').innerText = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
                 if (time > 0) time--;
             }, 1000);
         }
@@ -523,65 +476,40 @@
         function startLiveSalesSimulation() {
             const cities = ["Casablanca", "Rabat", "Marrakech", "Fès", "Tanger", "Agadir", "Kénitra", "Salé"];
             setInterval(() => {
-                if (productsDB.length === 0) return;
                 const randomCity = cities[Math.floor(Math.random() * cities.length)];
                 const randomProduct = productsDB[Math.floor(Math.random() * productsDB.length)];
+                document.getElementById('live-sales-text').innerText = `Un client de ${randomCity} a acheté un ${randomProduct.name} 🔥`;
                 const popup = document.getElementById('live-sales-popup');
-                const textEl = document.getElementById('live-sales-text');
-                
-                if (popup && textEl) {
-                    textEl.innerText = `Un client de ${randomCity} a acheté un ${randomProduct.name} 🔥`;
-                    popup.classList.add('show');
-                    setTimeout(() => { popup.classList.remove('show'); }, 4000);
-                }
+                popup.classList.add('show');
+                setTimeout(() => { popup.classList.remove('show'); }, 4000);
             }, 25000);
         }
 
         function handleSearch() {
             const query = document.getElementById('search-input').value.toLowerCase().trim();
-            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-            const catAll = document.getElementById('cat-all');
-            if (catAll) catAll.classList.add('active');
-
-            if(query === "") {
-                renderProducts(productsDB);
-                return;
-            }
+            if(query === "") { renderProducts(productsDB); return; }
             const filtered = productsDB.filter(p => p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query));
             renderProducts(filtered);
         }
 
         function filterItems(category) {
             document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-            const activeBtn = document.getElementById(`cat-${category}`);
-            if (activeBtn) activeBtn.classList.add('active');
-
-            const searchInput = document.getElementById('search-input');
-            if (searchInput) searchInput.value = "";
-
-            if (category === 'all') {
-                renderProducts(productsDB);
-            } else {
-                const filtered = productsDB.filter(p => p.category === category);
-                renderProducts(filtered);
-            }
+            document.getElementById(`cat-${category}`).classList.add('active');
+            if (category === 'all') { renderProducts(productsDB); } 
+            else { renderProducts(productsDB.filter(p => p.category === category)); }
         }
 
         function renderProducts(list) {
             const grid = document.getElementById('products-grid');
-            if (!grid) return;
-            if (list.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-12 text-sm opacity-50">Aucun produit trouvé</div>`;
-                return;
-            }
+            if (list.length === 0) { grid.innerHTML = `<div class="col-span-full text-center py-12 text-sm opacity-50">Aucun produit</div>`; return; }
             grid.innerHTML = list.map(p => `
                 <div class="product-card p-4 flex flex-col justify-between cursor-pointer" onclick="openProductModal(${p.id})">
-                    <div class="aspect-square bg-neutral-100 dark:bg-neutral-900 rounded-2xl p-3 flex items-center justify-center mb-4 overflow-hidden border border-neutral-200/20 dark:border-neutral-800/20">
-                        <img src="${p.img}" alt="${p.name}" class="max-h-full object-contain transition duration-300 hover:scale-105">
+                    <div class="aspect-square bg-neutral-100 dark:bg-neutral-900 rounded-2xl p-3 flex items-center justify-center mb-4 overflow-hidden border">
+                        <img src="${p.img}" alt="${p.name}" class="max-h-full object-contain">
                     </div>
                     <div>
-                        <span class="text-[9px] font-bold opacity-40 uppercase tracking-wider">${p.category}</span>
-                        <h4 class="font-bold text-xs md:text-sm tracking-tight truncate mt-0.5">${p.name}</h4>
+                        <span class="text-[9px] font-bold opacity-40 uppercase">${p.category}</span>
+                        <h4 class="font-bold text-xs md:text-sm truncate">${p.name}</h4>
                         <div class="flex items-center justify-between mt-3">
                             <span class="text-blue-600 font-extrabold text-sm">${p.price} DH</span>
                             <span class="text-[10px] font-bold bg-neutral-100 dark:bg-neutral-900 px-2 py-1 rounded-lg">Voir →</span>
@@ -593,8 +521,7 @@
 
         function go(id) {
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-            const targetView = document.getElementById(id);
-            if (targetView) targetView.classList.add('active');
+            document.getElementById(id).classList.add('active');
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
@@ -609,19 +536,14 @@
         }
 
         function closeAll() {
-            toggleSidebar(false);
-            toggleCart(false);
+            toggleSidebar(false); toggleCart(false);
             document.getElementById('product-modal').classList.remove('open');
             document.getElementById('overlay').classList.remove('active');
         }
 
         function openProductModal(id) {
             const p = productsDB.find(x => x.id === id);
-            if (!p) return;
-            currentSelectedProduct = p;
-            currentQty = 1;
-            currentSelectedColor = p.colors[0];
-
+            currentSelectedProduct = p; currentQty = 1; currentSelectedColor = p.colors[0];
             document.getElementById('modal-category').innerText = p.category;
             document.getElementById('modal-img').src = p.img;
             document.getElementById('modal-name').innerText = p.name;
@@ -629,13 +551,9 @@
             document.getElementById('modal-desc').innerText = p.desc;
             document.getElementById('modal-qty').innerText = currentQty;
 
-            const colorsContainer = document.getElementById('modal-colors');
-            colorsContainer.innerHTML = p.colors.map((color, index) => `
-                <button onclick="selectColor('${color}', this)" class="color-opt px-3 py-1.5 rounded-xl border text-[11px] font-bold transition-all ${index === 0 ? 'bg-blue-600 text-white border-blue-600 scale-105' : 'bg-neutral-100 dark:bg-neutral-900 border-transparent'}">
-                    ${color}
-                </button>
+            document.getElementById('modal-colors').innerHTML = p.colors.map((c, i) => `
+                <button onclick="selectColor('${c}', this)" class="color-opt px-3 py-1.5 rounded-xl border text-[11px] font-bold ${i === 0 ? 'bg-blue-600 text-white border-blue-600' : 'bg-neutral-100 dark:bg-neutral-900'}">${c}</button>
             `).join('');
-
             document.getElementById('product-modal').classList.add('open');
             document.getElementById('overlay').classList.add('active');
         }
@@ -643,118 +561,79 @@
         function selectColor(color, btn) {
             currentSelectedColor = color;
             document.querySelectorAll('.color-opt').forEach(b => {
-                b.classList.remove('bg-blue-600', 'text-white', 'border-blue-600', 'scale-105');
-                b.classList.add('bg-neutral-100', 'dark:bg-neutral-900', 'border-transparent');
+                b.classList.remove('bg-blue-600', 'text-white', 'border-blue-600');
+                b.classList.add('bg-neutral-100', 'dark:bg-neutral-900');
             });
-            btn.classList.remove('bg-neutral-100', 'dark:bg-neutral-900', 'border-transparent');
-            btn.classList.add('bg-blue-600', 'text-white', 'border-blue-600', 'scale-105');
+            btn.classList.add('bg-blue-600', 'text-white', 'border-blue-600');
         }
 
         function changeModalQty(offset) {
-            currentQty += offset;
-            if (currentQty < 1) currentQty = 1;
+            currentQty += offset; if (currentQty < 1) currentQty = 1;
             document.getElementById('modal-qty').innerText = currentQty;
         }
 
         function addModalItemToCart() {
-            if (!currentSelectedProduct) return;
-            
             const existing = cart.find(item => item.id === currentSelectedProduct.id && item.color === currentSelectedColor);
-            if (existing) {
-                existing.quantity += currentQty;
-            } else {
-                cart.push({
-                    id: currentSelectedProduct.id,
-                    name: currentSelectedProduct.name,
-                    price: currentSelectedProduct.price,
-                    img: currentSelectedProduct.img,
-                    color: currentSelectedColor,
-                    quantity: currentQty
-                });
-            }
-            
-            showToast();
-            updateCartUI();
-            closeAll();
-            toggleCart(true);
+            if (existing) { existing.quantity += currentQty; } 
+            else { cart.push({ id: currentSelectedProduct.id, name: currentSelectedProduct.name, price: currentSelectedProduct.price, img: currentSelectedProduct.img, color: currentSelectedColor, quantity: currentQty }); }
+            showToast(); updateCartUI(); closeAll(); toggleCart(true);
         }
 
         function updateCartUI() {
-            const cartItemsContainer = document.getElementById('cart-items');
-            const badge = document.getElementById('badge');
-            
+            const container = document.getElementById('cart-items');
             const totalQty = cart.reduce((sum, item) => sum + item.quantity, 0);
-            if (totalQty > 0) {
-                badge.innerText = totalQty;
-                badge.classList.remove('hidden');
-            } else {
-                badge.classList.add('hidden');
-            }
+            document.getElementById('badge').innerText = totalQty;
+            document.getElementById('badge').classList.toggle('hidden', totalQty === 0);
 
             if (cart.length === 0) {
-                cartItemsContainer.innerHTML = `<div class="text-center py-12 text-xs opacity-40">Votre sac est vide</div>`;
+                container.innerHTML = `<div class="text-center py-12 text-xs opacity-40">Votre sac est vide</div>`;
                 document.getElementById('subtotal-price').innerText = "0 DH";
                 document.getElementById('total-price').innerText = "0 DH";
-                updateShippingBar(0);
-                return;
+                updateShippingBar(0); return;
             }
 
             let subtotal = 0;
-            cartItemsContainer.innerHTML = cart.map((item, index) => {
+            container.innerHTML = cart.map((item, index) => {
                 subtotal += item.price * item.quantity;
                 return `
-                    <div class="flex items-center gap-3 p-3 bg-white/50 dark:bg-black/50 border border-neutral-200/40 dark:border-neutral-800/40 rounded-2xl relative">
+                    <div class="flex items-center gap-3 p-3 bg-white/50 dark:bg-black/50 border rounded-2xl">
                         <img src="${item.img}" class="w-16 h-16 object-contain bg-neutral-100 dark:bg-neutral-900 p-1 rounded-xl">
                         <div class="flex-1 min-w-0">
                             <h5 class="font-bold text-xs truncate">${item.name}</h5>
-                            <p class="text-[10px] opacity-50 mt-0.5">Couleur: ${item.color}</p>
+                            <p class="text-[10px] opacity-50">Couleur: ${item.color}</p>
                             <div class="flex items-center justify-between mt-2">
                                 <span class="text-xs font-extrabold text-blue-600">${item.price * item.quantity} DH</span>
-                                <div class="flex items-center bg-neutral-100 dark:bg-neutral-900 rounded-lg px-1 py-0.5">
-                                    <button onclick="changeCartQty(${index}, -1)" class="px-1.5 text-xs font-bold opacity-60 hover:opacity-100">-</button>
+                                <div class="flex items-center bg-neutral-100 dark:bg-neutral-900 rounded-lg px-1">
+                                    <button onclick="changeCartQty(${index}, -1)" class="px-1 text-xs font-bold">-</button>
                                     <span class="px-2 text-xs font-bold">${item.quantity}</span>
-                                    <button onclick="changeCartQty(${index}, 1)" class="px-1.5 text-xs font-bold opacity-60 hover:opacity-100">+</button>
+                                    <button onclick="changeCartQty(${index}, 1)" class="px-1 text-xs font-bold">+</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 `;
             }).join('');
-
             document.getElementById('subtotal-price').innerText = `${subtotal} DH`;
             document.getElementById('total-price').innerText = `${subtotal} DH`;
             updateShippingBar(subtotal);
         }
 
         function changeCartQty(index, offset) {
-            cart[index].quantity += offset;
-            if (cart[index].quantity <= 0) cart.splice(index, 1);
+            cart[index].quantity += offset; if (cart[index].quantity <= 0) cart.splice(index, 1);
             updateCartUI();
         }
 
         function updateShippingBar(subtotal) {
             const target = 200;
-            const progress = document.getElementById('shipping-progress');
-            const text = document.getElementById('shipping-text');
-            const shippingPrice = document.getElementById('shipping-price');
-
-            if (subtotal >= target) {
-                progress.style.width = "100%";
-                text.innerText = "🎉 Vous bénéficiez de la livraison gratuite !";
-                shippingPrice.innerText = "Gratuite";
-            } else {
-                const needed = target - subtotal;
-                const pct = (subtotal / target) * 100;
-                progress.style.width = `${pct}%`;
-                text.innerText = `Plus que ${needed} DH pour livraison gratuite`;
-                shippingPrice.innerText = "0 DH";
-            }
+            const pct = Math.min((subtotal / target) * 100, 100);
+            document.getElementById('shipping-progress').style.width = `${pct}%`;
+            document.getElementById('shipping-text').innerText = subtotal >= target ? "🎉 Livraison gratuite !" : `Plus que ${target - subtotal} DH pour livraison gratuite`;
+            document.getElementById('shipping-price').innerText = subtotal >= target ? "Gratuite" : "0 DH";
         }
 
         function showToast() {
-            const toast = document.getElementById('toast-notif');
-            toast.classList.add('show');
-            setTimeout(() => { toast.classList.remove('show'); }, 2500);
+            document.getElementById('toast-notif').classList.add('show');
+            setTimeout(() => { document.getElementById('toast-notif').classList.remove('show'); }, 2500);
         }
 
         function toggleTheme() {
@@ -762,36 +641,47 @@
             localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
         }
 
+        // دالة الدمج المزدوجة المحسنة: ترسل عبر الإيميل وتفتح الواتساب معاً تلقائياً
         function checkout() {
             const name = document.getElementById('cust-name').value.trim();
             const city = document.getElementById('cust-city').value.trim();
             const phone = document.getElementById('cust-phone').value.trim();
 
-            if (cart.length === 0) {
-                alert("Votre panier est vide !");
-                return;
-            }
-            if (!name || !city || !phone) {
-                alert("S'il vous plaît, remplissez vos informations de validation !");
-                return;
-            }
+            if (cart.length === 0) { alert("Votre panier est vide !"); return; }
+            if (!name || !city || !phone) { alert("Veuillez remplir vos informations !"); return; }
 
-            let details = cart.map(item => `- ${item.name} (${item.color}) x${item.quantity}`).join('\n');
-            let msg = `🛍️ *NOUVELLE COMMANDE MARBOHA SHOP*\n\n`;
-            msg += `👤 *Client :* ${name}\n📍 *Ville :* ${city}\n📞 *WhatsApp :* ${phone}\n\n`;
-            msg += `📦 *Produits :*\n${details}\n\n`;
-            msg += `💰 *MONTANT TOTAL :* ${document.getElementById('total-price').innerText}`;
+            // 1. تجهيز تفاصيل نص المنتجات
+            let detailsText = cart.map(item => `- ${item.name} (${item.color}) x${item.quantity}`).join('\n');
+            let totalAmount = document.getElementById('total-price').innerText;
 
-            window.open(`https://wa.me/212614783602?text=${encodeURIComponent(msg)}`);
+            // 2. تحديث الحقل المخفي في فورم الإيميل وإرساله خلف الكواليس عبر Fetch API لـ Web3Forms
+            document.getElementById('email-order-details').value = `\n${detailsText}\n\nTotal: ${totalAmount}`;
+            
+            const form = document.getElementById('checkout-form');
+            const formData = new FormData(form);
+
+            // إرسال الإيميل في الخلفية دون تعطيل المستخدم
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: formData
+            }).then(response => {
+                console.log("Email envoyé avec succès !");
+            }).catch(error => {
+                console.error("Erreur d'envoi d'email", error);
+            });
+
+            // 3. فتح الواتساب مباشرة للزبون لإتمام التجربة المعتادة بنجاح
+            let whatsappMsg = `🛍️ *NOUVELLE COMMANDE MARBOHA SHOP*\n\n`;
+            whatsappMsg += `👤 *Client :* ${name}\n📍 *Ville :* ${city}\n📞 *WhatsApp :* ${phone}\n\n`;
+            whatsappMsg += `📦 *Produits :*\n${detailsText}\n\n`;
+            whatsappMsg += `💰 *MONTANT TOTAL :* ${totalAmount}`;
+
+            window.open(`https://wa.me/212614783602?text=${encodeURIComponent(whatsappMsg)}`);
         }
 
         window.onload = () => {
-            if (localStorage.getItem('theme') === 'dark') {
-                document.body.classList.add('dark-mode');
-            }
-            renderProducts(productsDB);
-            startCountdown();
-            startLiveSalesSimulation();
+            if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark-mode');
+            renderProducts(productsDB); startCountdown(); startLiveSalesSimulation();
         };
     </script>
 </body>
