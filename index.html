@@ -55,6 +55,7 @@
 </head>
 <body class="antialiased selection:bg-black selection:text-white">
 
+    <!-- Navbar -->
     <nav class="fixed top-0 w-full z-50 glass-card ios-blur transition-all duration-300">
         <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
             <a href="#" class="font-black text-xl tracking-tighter uppercase font-['Montserrat'] bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent">
@@ -70,6 +71,7 @@
         </div>
     </nav>
 
+    <!-- Main Hero Banner -->
     <section class="pt-32 pb-16 px-6 text-center max-w-4xl mx-auto">
         <span class="text-xs font-bold tracking-widest text-gray-400 uppercase">Premium Tech & Accessories</span>
         <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-black mt-3 mb-6 leading-tight">
@@ -80,14 +82,55 @@
         </p>
     </section>
 
+    <!-- Products Grid -->
     <main class="max-w-7xl mx-auto px-6 pb-24">
         <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="col-span-full text-center py-12 text-gray-400 font-medium">
-                <p>Chargement des produits exclusifs...</p>
+            
+            <!-- Produit 1: Crystal Pink Earbuds -->
+            <div class="glass-card rounded-3xl overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col group product-gradient" data-selected-color="pink">
+                <div class="p-8 flex items-center justify-center relative overflow-hidden aspect-square">
+                    <img id="img-earbuds" src="crystal-pink-ear-buds.png" alt="Crystal Pink Earbuds" class="max-h-64 object-contain group-hover:scale-105 transition-transform duration-500">
+                </div>
+                <div class="p-6 bg-white/50 ios-blur border-t border-gray-100 flex flex-col flex-1 text-center">
+                    <h3 class="font-bold text-xl text-black tracking-tight">Crystal Pink Earbuds</h3>
+                    <div class="flex gap-2 mt-4 justify-center">
+                        <button onclick="changeProductColor('earbuds', 'pink', 'crystal-pink-ear-buds.png')" class="w-6 h-6 rounded-full border border-gray-300 ring-2 ring-black scale-110" style="background-color: #ffb6c1"></button>
+                    </div>
+                    <div class="mt-6 flex items-center justify-between pt-2 border-t border-gray-50 mt-auto">
+                        <span class="text-2xl font-extrabold text-black">299 DH</span>
+                        <button onclick="addToCart('earbuds', 'Crystal Pink Earbuds', 299, 'crystal-pink-ear-buds.png')" class="px-5 py-3 bg-black hover:bg-gray-800 text-white font-semibold rounded-xl text-sm transition-colors duration-200">
+                            Ajouter
+                        </button>
+                    </div>
+                </div>
             </div>
+
+            <!-- Produit 2: Fast Charger 25W -->
+            <div class="glass-card rounded-3xl overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col group product-gradient" data-selected-color="white">
+                <div class="p-8 flex items-center justify-center relative overflow-hidden aspect-square">
+                    <img id="img-charger" src="charger 25 w.png" alt="Fast Charger 25W" class="max-h-64 object-contain group-hover:scale-105 transition-transform duration-500">
+                </div>
+                <div class="p-6 bg-white/50 ios-blur border-t border-gray-100 flex flex-col flex-1 text-center">
+                    <h3 class="font-bold text-xl text-black tracking-tight">Fast Charger 25W</h3>
+                    <div class="flex gap-2 mt-4 justify-center">
+                        <button onclick="changeProductColor('charger', 'white', 'charger 25 w.png')" class="w-6 h-6 rounded-full border border-gray-300 ring-2 ring-black scale-110" style="background-color: #ffffff"></button>
+                    </div>
+                    <div class="mt-6 flex items-center justify-between pt-2 border-t border-gray-50 mt-auto">
+                        <span class="text-2xl font-extrabold text-black">149 DH</span>
+                        <button onclick="addToCart('charger', 'Fast Charger 25W', 149, 'charger 25 w.png')" class="px-5 py-3 bg-black hover:bg-gray-800 text-white font-semibold rounded-xl text-sm transition-colors duration-200">
+                            Ajouter
+                        </button>
+                    </div>
+                </div>
+            </div>
+
         </div>
+
+        <!-- مكان ظهور المنتجات الديناميكية القادمة من الفايربيز سحابياً -->
+        <div id="dynamic-products-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8"></div>
     </main>
 
+    <!-- Cart Sidebar -->
     <div id="cart-sidebar" class="fixed inset-y-0 right-0 w-full max-w-md bg-white/95 ios-blur shadow-2xl transform translate-x-full transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] z-50 flex flex-col border-l border-gray-100">
         <div class="p-6 border-b border-gray-100 flex items-center justify-between">
             <h2 class="text-lg font-bold tracking-tight text-black flex items-center gap-2">
@@ -101,7 +144,8 @@
         </div>
 
         <div id="cart-container" class="flex-1 overflow-y-auto p-6 space-y-6">
-            </div>
+            <!-- Vide par défaut -->
+        </div>
 
         <div class="p-6 border-t border-gray-100 bg-gray-50/50 space-y-4">
             <div class="space-y-3">
@@ -131,114 +175,41 @@
         </div>
     </div>
 
+    <!-- Live Sales Simulation Notification -->
     <div id="live-notification" class="fixed bottom-6 left-6 glass-card ios-blur px-4 py-3 rounded-2xl shadow-xl border border-white/20 transform translate-y-20 opacity-0 transition-all duration-500 z-50 flex items-center gap-3 max-w-sm">
         <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
         <p class="text-xs font-medium text-gray-600" id="notification-text"></p>
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
-        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-database.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyC33pop_M8Ma6K1CPPufZoitZmKb-NtTSg",
-            authDomain: "marboha-tech.firebaseapp.com",
-            databaseURL: "https://marboha-tech-default-rtdb.firebaseio.com",
-            projectId: "marboha-tech",
-            storageBucket: "marboha-tech.firebasestorage.app",
-            messagingSenderId: "208106058234",
-            appId: "1:208106058234:web:f6594459a1003a73337443",
-            measurementId: "G-50D3TCPCEY"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
-
+    <!-- السكريبت العادي للتحكم بالواجهة والسلة والمحاكاة -->
+    <script>
         let cart = [];
 
-        // Fetch products dynamically from Firebase Realtime Database
-        const productsRef = ref(database, 'products');
-        onValue(productsRef, (snapshot) => {
-            const data = snapshot.val();
-            const grid = document.getElementById('products-grid');
-            grid.innerHTML = '';
-
-            if(!data) {
-                grid.innerHTML = `<p class="col-span-full text-center text-gray-400 py-12 font-medium">Aucun produit disponible pour le moment.</p>`;
-                return;
+        function toggleCart(forceOpen = false) {
+            const sidebar = document.getElementById('cart-sidebar');
+            if(forceOpen) {
+                sidebar.classList.remove('translate-x-full');
+            } else {
+                sidebar.classList.toggle('translate-x-full');
             }
+        }
 
-            Object.keys(data).forEach((key) => {
-                const prod = data[key];
-                // Support both individual arrays or direct fields
-                const colorsArr = prod.colors ? (Array.isArray(prod.colors) ? prod.colors : Object.values(prod.colors)) : [];
-                
-                let colorOptionsHtml = '';
-                if(colorsArr.length > 0) {
-                    colorOptionsHtml = `<div class="flex gap-2 mt-4 justify-center">`;
-                    colorsArr.forEach((c, idx) => {
-                        colorOptionsHtml += `
-                            <button onclick="window.selectColor('${key}', '${c}')" id="btn-${key}-${c}" class="color-dot w-6 h-6 rounded-full border border-gray-300 transition-all ${idx === 0 ? 'ring-2 ring-black scale-110' : ''}" style="background-color: ${c}"></button>
-                        `;
-                    });
-                    colorOptionsHtml += `</div>`;
-                }
+        function changeProductColor(prodId, color, imgSrc) {
+            document.getElementById(`img-${prodId}`).src = imgSrc;
+        }
 
-                const card = document.createElement('div');
-                card.className = "glass-card rounded-3xl overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col group product-gradient";
-                card.dataset.selectedColor = colorsArr[0] || '';
-
-                card.innerHTML = `
-                    <div class="p-8 flex items-center justify-center relative overflow-hidden aspect-square">
-                        <img src="${prod.image || 'https://via.placeholder.com/400'}" alt="${prod.name}" class="max-h-64 object-contain group-hover:scale-105 transition-transform duration-500">
-                    </div>
-                    <div class="p-6 bg-white/50 ios-blur border-t border-gray-100 flex flex-col flex-1 text-center">
-                        <h3 class="font-bold text-xl text-black tracking-tight">${prod.name}</h3>
-                        ${colorOptionsHtml}
-                        <div class="mt-6 flex items-center justify-between pt-2 border-t border-gray-50 mt-auto">
-                            <span class="text-2xl font-extrabold text-black">${prod.price} DH</span>
-                            <button onclick="window.localAddToCart('${key}', '${prod.name}', ${prod.price}, '${prod.image}')" class="px-5 py-3 bg-black hover:bg-gray-800 text-white font-semibold rounded-xl text-sm transition-colors duration-200">
-                                Ajouter
-                            </button>
-                        </div>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        });
-
-        // Bridge functions to window context for global onclick triggers
-        window.selectColor = function(prodKey, color) {
-            const dots = document.querySelectorAll(`[id^="btn-${prodKey}-"]`);
-            dots.forEach(d => d.classList.remove('ring-2', 'ring-black', 'scale-110'));
-            document.getElementById(`btn-${prodKey}-${color}`).classList.add('ring-2', 'ring-black', 'scale-110');
-            
-            // Look for parent card container to store selected color state
-            const targetDot = document.getElementById(`btn-${prodKey}-${color}`);
-            const parentCard = targetDot.closest('.glass-card');
-            if(parentCard) parentCard.dataset.selectedColor = color;
-        };
-
-        window.localAddToCart = function(id, name, price, image) {
-            const dots = document.querySelectorAll(`[id^="btn-${id}-"]`);
-            let chosenColor = '';
-            dots.forEach(d => {
-                if(d.classList.contains('ring-black')) {
-                    chosenColor = d.id.replace(`btn-${id}-`, '');
-                }
-            });
-
-            const existing = cart.find(item => item.id === id && item.chosenColor === chosenColor);
+        function addToCart(id, name, price, image) {
+            const existing = cart.find(item => item.id === id);
             if(existing) {
                 existing.quantity++;
             } else {
-                cart.push({ id, name, price, image, chosenColor, quantity: 1 });
+                cart.push({ id, name, price, image, quantity: 1 });
             }
-            window.updateCartUI();
-            window.toggleCart(true);
-        };
+            updateCartUI();
+            toggleCart(true);
+        }
 
-        window.updateCartUI = function() {
+        function updateCartUI() {
             const countBadge = document.getElementById('cart-count');
             const itemsQty = document.getElementById('cart-items-qty');
             const container = document.getElementById('cart-container');
@@ -257,11 +228,7 @@
             itemsQty.innerText = `(${totalQty} item${totalQty > 1 ? 's' : ''})`;
 
             if(cart.length === 0) {
-                container.innerHTML = `
-                    <div class="text-center py-12 text-gray-400">
-                        <p class="font-medium">Votre panier est vide</p>
-                    </div>
-                `;
+                container.innerHTML = `<div class="text-center py-12 text-gray-400"><p class="font-medium">Votre panier est vide</p></div>`;
                 subtotalEl.innerText = "0 DH";
                 totalEl.innerText = "0 DH";
                 return;
@@ -272,48 +239,35 @@
 
             cart.forEach((item, idx) => {
                 subtotal += item.price * item.quantity;
-                const itemRow = document.createElement('div');
-                itemRow.className = "flex items-center gap-4 bg-gray-50/50 p-4 rounded-2xl border border-gray-100 relative";
-                itemRow.innerHTML = `
-                    <img src="${item.image}" class="w-20 h-20 object-contain bg-white rounded-xl p-2 border border-gray-100">
-                    <div class="flex-1 min-w-0">
-                        <h4 class="font-bold text-sm text-black truncate">${item.name}</h4>
-                        <p class="text-xs text-gray-400 mt-0.5 font-medium">${item.chosenColor ? 'Couleur: ' + item.chosenColor : ''}</p>
-                        <div class="flex items-center justify-between mt-3">
-                            <span class="text-sm font-extrabold text-black">${item.price * item.quantity} DH</span>
-                            <div class="flex items-center border border-gray-200 bg-white rounded-lg">
-                                <button onclick="window.changeQty(${idx}, -1)" class="px-2 py-1 text-gray-500 font-bold hover:bg-gray-50 rounded-l-lg">-</button>
-                                <span class="px-3 text-xs font-bold text-black">${item.quantity}</span>
-                                <button onclick="window.changeQty(${idx}, 1)" class="px-2 py-1 text-gray-500 font-bold hover:bg-gray-50 rounded-r-lg">+</button>
+                container.innerHTML += `
+                    <div class="flex items-center gap-4 bg-gray-50/50 p-4 rounded-2xl border border-gray-100 relative">
+                        <img src="${item.image}" class="w-20 h-20 object-contain bg-white rounded-xl p-2 border border-gray-100">
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-bold text-sm text-black truncate">${item.name}</h4>
+                            <div class="flex items-center justify-between mt-3">
+                                <span class="text-sm font-extrabold text-black">${item.price * item.quantity} DH</span>
+                                <div class="flex items-center border border-gray-200 bg-white rounded-lg">
+                                    <button onclick="changeQty(${idx}, -1)" class="px-2 py-1 text-gray-500 font-bold hover:bg-gray-50">-</button>
+                                    <span class="px-3 text-xs font-bold text-black">${item.quantity}</span>
+                                    <button onclick="changeQty(${idx}, 1)" class="px-2 py-1 text-gray-500 font-bold hover:bg-gray-50">+</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 `;
-                container.appendChild(itemRow);
             });
 
             subtotalEl.innerText = `${subtotal} DH`;
             totalEl.innerText = `${subtotal} DH`;
-        };
+        }
 
-        window.changeQty = function(idx, offset) {
+        function changeQty(idx, offset) {
             cart[idx].quantity += offset;
-            if(cart[idx].quantity <= 0) {
-                cart.splice(idx, 1);
-            }
-            window.updateCartUI();
-        };
+            if(cart[idx].quantity <= 0) cart.splice(idx, 1);
+            updateCartUI();
+        }
 
-        window.toggleCart = function(forceOpen = false) {
-            const sidebar = document.getElementById('cart-sidebar');
-            if(forceOpen) {
-                sidebar.classList.remove('translate-x-full');
-            } else {
-                sidebar.classList.toggle('translate-x-full');
-            }
-        };
-
-        window.checkout = function() {
+        function checkout() {
             const name = document.getElementById('cust-name').value.trim();
             const city = document.getElementById('cust-city').value.trim();
             const phone = document.getElementById('cust-phone').value.trim();
@@ -323,48 +277,87 @@
                 return;
             }
 
-            if(cart.length === 0) {
-                alert("Votre panier est vide !");
-                return;
-            }
-
-            let details = cart.map(item => `- ${item.name} ${item.chosenColor ? '('+item.chosenColor+')':''} x${item.quantity}`).join('\n');
+            let details = cart.map(item => `- ${item.name} x${item.quantity}`).join('\n');
             let msg = `🛍️ *NOUVELLE COMMANDE MARBOHA SHOP*\n\n`;
             msg += `👤 *Client :* ${name}\n📍 *Ville :* ${city}\n📞 *Téléphone :* ${phone}\n\n`;
             msg += `📦 *Produits :*\n${details}\n\n`;
             msg += `💰 *TOTAL À PAYER :* ${document.getElementById('total-price').innerText}`;
 
             window.open(`https://wa.me/212614783602?text=${encodeURIComponent(msg)}`);
-        };
+        }
 
-        // Live Sales Simulation
         function startLiveSalesSimulation() {
             const names = ["Youssef", "Amine", "Sarah", "Khadija", "Anass", "Meriem", "Othmane", "Layla"];
             const cities = ["Casablanca", "Rabat", "Marrakech", "Tangier", "Fès", "Agadir", "Kénitra"];
-            const products = ["Crystal Pink Earbuds", "Fast Charger 25W", "Premium Powerbank"];
+            const products = ["Crystal Pink Earbuds", "Fast Charger 25W"];
 
             setInterval(() => {
                 const randomName = names[Math.floor(Math.random() * names.length)];
                 const randomCity = cities[Math.floor(Math.random() * cities.length)];
                 const randomProd = products[Math.floor(Math.random() * products.length)];
 
-                const notifText = document.getElementById('notification-text');
-                const notifEl = document.getElementById('live-notification');
-
-                notifText.innerHTML = `<strong>${randomName}</strong> de ${randomCity} vient d'acheter <strong>${randomProd}</strong>`;
-                
-                notifEl.classList.remove('translate-y-20', 'opacity-0');
+                document.getElementById('notification-text').innerHTML = `<strong>${randomName}</strong> de ${randomCity} vient d'acheter <strong>${randomProd}</strong>`;
+                document.getElementById('live-notification').classList.remove('translate-y-20', 'opacity-0');
                 
                 setTimeout(() => {
-                    notifEl.classList.add('translate-y-20', 'opacity-0');
+                    document.getElementById('live-notification').classList.add('translate-y-20', 'opacity-0');
                 }, 4000);
-
             }, 12000);
         }
 
-        window.onload = () => {
-            startLiveSalesSimulation();
+        window.onload = () => { startLiveSalesSimulation(); };
+    </script>
+
+    <!-- هنا يتم ربط قاعدة بيانات الفايربيز المفقودة بطريقة صحيحة ومكتملة تماماً -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyC33pop_M8Ma6K1CPPufZoitZmKb-NtTSg",
+            authDomain: "marboha-tech.firebaseapp.com",
+            databaseURL: "https://marboha-tech-default-rtdb.firebaseio.com",
+            projectId: "marboha-tech",
+            storageBucket: "marboha-tech.firebasestorage.app",
+            messagingSenderId: "208106058234",
+            appId: "1:208106058234:web:f6594459a1003a73337443",
+            measurementId: "G-50D3TCPCEY"
         };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const productsRef = ref(db, 'products');
+
+        onValue(productsRef, (snapshot) => {
+            const data = snapshot.val();
+            const dynamicGrid = document.getElementById('dynamic-products-grid');
+            if (!dynamicGrid) return;
+            
+            dynamicGrid.innerHTML = '';
+            
+            if (data) {
+                Object.keys(data).forEach((key) => {
+                    const prod = data[key];
+                    const card = document.createElement('div');
+                    card.className = "glass-card rounded-3xl overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col group product-gradient";
+                    card.innerHTML = `
+                        <div class="p-8 flex items-center justify-center relative overflow-hidden aspect-square">
+                            <img src="${prod.image || 'https://via.placeholder.com/400'}" class="max-h-64 object-contain group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <div class="p-6 bg-white/50 ios-blur border-t border-gray-100 flex flex-col flex-1 text-center">
+                            <h3 class="font-bold text-xl text-black tracking-tight">${prod.name}</h3>
+                            <div class="mt-6 flex items-center justify-between pt-2 border-t border-gray-50 mt-auto">
+                                <span class="text-2xl font-extrabold text-black">${prod.price} DH</span>
+                                <button onclick="addToCart('${key}', '${prod.name}', ${prod.price}, '${prod.image}')" class="px-5 py-3 bg-black hover:bg-gray-800 text-white font-semibold rounded-xl text-sm transition-colors duration-200">
+                                    Ajouter
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    dynamicGrid.appendChild(card);
+                });
+            }
+        });
     </script>
 </body>
 </html>
