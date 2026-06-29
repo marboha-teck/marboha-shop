@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MARBOHA SHOP | Premium Apple Store Experience</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Plus Jakarta Sans & Montserrat -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Montserrat:wght@900&display=swap" rel="stylesheet">
     
     <style>
@@ -131,12 +129,10 @@
 
     <div class="overlay" id="overlay" onclick="closeAll()"></div>
     
-    <!-- Toast Notification المصحح والممركز في أعلى الشاشة -->
     <div id="toast-notif" class="fixed top-[95px] left-1/2 -translate-x-1/2 glass-effect px-6 py-3 rounded-full font-bold text-xs z-[5000] opacity-0 pointer-events-none transition-all duration-300 shadow-lg flex items-center gap-2 whitespace-nowrap">
         <span>✨</span> <span id="toast-text">Sac mis à jour</span>
     </div>
 
-    <!-- Live Sales Popup -->
     <div id="live-sales-popup" class="fixed bottom-6 left-6 glass-effect p-4 rounded-2xl shadow-xl z-30 opacity-0 transform translate-y-4 transition-all duration-500 max-w-sm flex items-center gap-3 pointer-events-none">
         <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shrink-0"></div>
         <div>
@@ -145,13 +141,12 @@
         </div>
     </div>
 
-    <!-- Floating Apple Nav Bar -->
     <nav class="apple-nav glass-effect px-4 md:px-6 flex items-center justify-between gap-3">
         <button onclick="toggleSidebar(true)" class="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-xl transition shrink-0">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
         </button>
         <div onclick="go('home-view')" class="hidden md:flex items-center cursor-pointer shrink-0">
-            <span class="text-sm font-black tracking-tight uppercase">MARBOHA <span class="text-blue-600">SHOP</span></span>
+            <span class="text-sm font-black tracking-tight uppercase"><span class="text-yellow-500">M</span>ARBOHA <span class="text-blue-600">SHOP</span></span>
         </div>
         <div class="flex-1 max-w-sm relative">
             <input type="text" id="search-input" oninput="handleSearch()" placeholder="Rechercher un produit..." class="w-full text-xs font-semibold pl-8 pr-4 py-2 rounded-xl bg-black/5 dark:bg-white/5 border border-transparent focus:outline-none focus:border-blue-500/30 transition">
@@ -166,10 +161,9 @@
         </div>
     </nav>
 
-    <!-- Sidebar Menu -->
     <div id="sidebar" class="glass-effect flex flex-col p-6">
         <div class="flex justify-between items-center mb-10">
-            <h3 class="font-bold text-lg tracking-tight">MARBOHA <span class="text-blue-600">SHOP</span></h3>
+            <h3 class="font-bold text-lg tracking-tight"><span class="text-yellow-500">M</span>ARBOHA <span class="text-blue-600">SHOP</span></h3>
             <button onclick="closeAll()" class="w-8 h-8 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center font-normal text-lg opacity-60 hover:opacity-100 transition">&times;</button>
         </div>
         <nav class="flex flex-col flex-1">
@@ -184,7 +178,6 @@
         </nav>
     </div>
 
-    <!-- Cart Drawer -->
     <div id="cart-drawer" class="glass-effect flex flex-col">
         <div class="p-5 border-b border-neutral-200/50 dark:border-neutral-800/50 flex justify-between items-center">
             <h3 class="font-bold text-sm tracking-tight tracking-widest">VOTRE SAC</h3>
@@ -218,7 +211,6 @@
         </div>
     </div>
 
-    <!-- Product Modal Quick View -->
     <div id="product-modal" class="glass-effect p-6 md:p-8 flex flex-col max-h-[85vh] overflow-y-auto">
         <div class="flex justify-between items-center mb-5">
             <span id="modal-category" class="text-[9px] bg-blue-500/10 text-blue-600 font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">Premium</span>
@@ -246,18 +238,16 @@
         </div>
     </div>
 
-    <!-- Main View Section -->
     <div id="home-view" class="view pt-[85px]">
         <section class="hero-mesh mb-12">
             <div class="flex flex-col items-center justify-center gap-6 max-w-xl w-full z-10 px-4">
-                <h1 class="hero-title">MARBOHA<br>SHOP</h1>
+                <h1 class="hero-title"><span class="text-yellow-500">M</span>ARBOHA<br>SHOP</h1>
                 <div class="w-full max-w-md aspect-[16/9] rounded-2xl overflow-hidden border border-white/10 shadow-2xl backdrop-blur-sm bg-white/5 p-1 hover:scale-[1.02] transition duration-500">
                     <img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=800&q=80" alt="Marboha Banner" class="w-full h-full object-cover rounded-xl">
                 </div>
             </div>
         </section>
 
-        <!-- Product Catalog Container -->
         <div id="catalog" class="max-w-6xl mx-auto py-12 px-4 md:px-6">
             <div class="flex gap-2.5 mb-8 overflow-x-auto pb-3 no-scrollbar">
                 <button onclick="filterItems('all')" class="cat-btn active" id="cat-all">Tout</button>
@@ -265,10 +255,10 @@
                 <button onclick="filterItems('Audio')" class="cat-btn" id="cat-Audio">Audio</button>
                 <button onclick="filterItems('Watch')" class="cat-btn" id="cat-Watch">Montres</button>
             </div>
+            <div id="loading-indicator" class="text-center py-10 font-bold opacity-50 text-sm">Chargement des produits depuis le serveur Google...</div>
             <div id="products-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6"></div>
         </div>
 
-        <!-- Customer Testimonials -->
         <section class="py-14 px-4 md:px-6 border-t border-neutral-200/40 dark:border-neutral-800/40 bg-neutral-100/20 dark:bg-neutral-900/10">
             <div class="max-w-5xl mx-auto text-center">
                 <h3 class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-3">Témoignages</h3>
@@ -291,12 +281,10 @@
         </section>
     </div>
 
-    <!-- Support Center View -->
     <div id="support-view" class="view hidden pt-32 px-4 md:px-6 pb-16 min-height-screen">
         <div class="max-w-4xl mx-auto text-center">
             <h2 class="text-3xl font-extrabold uppercase tracking-tight mb-10">SUPPORT HUB</h2>
             
-            <!-- Cards Section -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
                 <div class="product-card p-6 flex flex-col items-center">
                     <div class="text-3xl mb-3">💬</div>
@@ -315,14 +303,11 @@
                 </div>
             </div>
 
-            <!-- Web3Forms Message Section -->
             <div class="max-w-xl mx-auto product-card p-6 md:p-8 text-left">
                 <h3 class="text-sm font-bold text-blue-600 uppercase tracking-widest mb-1">Contactez-nous</h3>
                 <h2 class="text-lg font-extrabold tracking-tight mb-5 uppercase">Envoyer un message</h2>
                 
-                <!-- Web3Forms Form Configuration -->
                 <form id="support-msg-form" onsubmit="sendSupportMessage(event)" class="space-y-4">
-                    <!-- تم دمج الـ Access Key الخاص بـ Web3Forms مباشرة بنجاح -->
                     <input type="hidden" id="web3-access-key" value="83029047-dab7-46d7-a0fa-cde6ca83dd8b">
                     
                     <div>
@@ -342,14 +327,12 @@
                     </button>
                 </form>
             </div>
-
         </div>
     </div>
 
-    <!-- Advanced Javascript Application Architecture -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
-        import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-database.js";
+        import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyC33pop_M8Ma6K1CPPufZoitZmKb-NtTSg",
@@ -365,18 +348,34 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        const productsDB = [
-            { id: 1, name: "Samsung 65W Trio", price: 75, category: "Power", img: "https://images.unsplash.com/photo-1622445262465-2481c4574875?auto=format&fit=crop&w=500&q=80", desc: "Chargeur ultra rapide d'origine équipé de 3 ports (2x USB-C, 1x USB-A) pour charger simultanément votre PC portable, smartphone et tablette.", colors: ["Noir", "Blanc"] },
-            { id: 2, name: "Samsung 25W White", price: 50, category: "Power", img: "https://images.unsplash.com/photo-1609592424083-0599540b6e92?auto=format&fit=crop&w=500&q=80", desc: "Adaptateur secteur USB-C 25W délivrant la technologie Super Fast Charging pour recharger vos appareils Galaxy en un temps record.", colors: ["Blanc"] },
-            { id: 3, name: "Earbuds Crystal Pink", price: 95, category: "Audio", img: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=500&q=80", desc: "Écouteurs sans fil haut de gamme avec un design Crystal Rose magnifique. Son haute fidélité, réduction de bruit passive et batterie longue durée.", colors: ["Rose", "Blanc", "Noir"] },
-            { id: 4, name: "Samsung 25W Black", price: 50, category: "Power", img: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=500&q=80", desc: "Le classique bloc de charge rapide Samsung 25W en couleur noire mate. Protection contre les surcharges.", colors: ["Noir"] },
-            { id: 5, name: "Galaxy Watch Ultra", price: 290, category: "Watch", img: "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=500&q=80", desc: "Montre connectée sportive ultime de chez Samsung. Suivi santé avancé, GPS double frequency, écran ultra lumineux.", colors: ["Titane", "Noir", "Orange"] }
-        ];
-
+        // مصفوفة المنتجات فارغة مؤقتاً لحين جلبها حياً من سيرفر جوجل
+        let productsDB = [];
         let cart = [];
         let currentSelectedProduct = null;
         let currentQty = 1;
         let currentSelectedColor = "";
+
+        // جلب المنتجات بشكل حي من السيرفر
+        const productsRef = ref(db, "products/");
+        onValue(productsRef, (snapshot) => {
+            const data = snapshot.val();
+            const loadingIndicator = document.getElementById('loading-indicator');
+            
+            if (data) {
+                // تحويل البيانات القادمة من Firebase إلى مصفوفة قابلة للقراءة في المتصفح
+                productsDB = Object.keys(data).map(key => ({
+                    id: key,
+                    ...data[key]
+                }));
+                if (loadingIndicator) loadingIndicator.classList.add('hidden');
+                renderProducts(productsDB);
+            } else {
+                // في حال كانت قاعدة البيانات فارغة تماماً على فايبريز، تظهر هذه الرسالة
+                if (loadingIndicator) {
+                    loadingIndicator.innerHTML = "⚠️ Aucun produit disponible sur le serveur. Veuillez en ajouter depuis la console Firebase.";
+                }
+            }
+        });
 
         window.toggleSidebar = function(status) {
             document.getElementById('sidebar').classList.toggle('open', status);
@@ -425,7 +424,7 @@
             if(!product) return;
             currentSelectedProduct = product;
             currentQty = 1;
-            currentSelectedColor = product.colors[0];
+            currentSelectedColor = product.colors && product.colors.length > 0 ? product.colors[0] : "Standard";
 
             document.getElementById('modal-category').innerText = product.category;
             document.getElementById('modal-img').src = product.img;
@@ -435,11 +434,15 @@
             document.getElementById('modal-qty').innerText = currentQty;
 
             const colorsContainer = document.getElementById('modal-colors');
-            colorsContainer.innerHTML = product.colors.map((color, index) => `
-                <button onclick="selectColor('${color}', this)" class="color-opt px-3 py-1.5 rounded-xl border text-[11px] font-bold transition-all ${index === 0 ? 'bg-blue-600 text-white border-blue-600 scale-105' : 'bg-neutral-100 dark:bg-neutral-900'}" type="button">
-                    ${color}
-                </button>
-            `).join('');
+            if (product.colors && product.colors.length > 0) {
+                colorsContainer.innerHTML = product.colors.map((color, index) => `
+                    <button onclick="selectColor('${color}', this)" class="color-opt px-3 py-1.5 rounded-xl border text-[11px] font-bold transition-all ${index === 0 ? 'bg-blue-600 text-white border-blue-600 scale-105' : 'bg-neutral-100 dark:bg-neutral-900'}" type="button">
+                        ${color}
+                    </button>
+                `).join('');
+            } else {
+                colorsContainer.innerHTML = `<span class="text-xs opacity-50">Par défaut</span>`;
+            }
 
             document.getElementById('product-modal').classList.add('open');
             document.getElementById('overlay').classList.add('active');
@@ -489,7 +492,6 @@
             localStorage.setItem('theme', document.documentElement.classList.contains('dark-mode') ? 'dark' : 'light');
         };
 
-        // دالة إرسال الرسائل عبر Web3Forms المحدثة
         window.sendSupportMessage = function(event) {
             event.preventDefault();
             const submitBtn = document.getElementById('msg-submit-btn');
@@ -532,17 +534,14 @@
             });
         };
 
-        // دالة الـ Toast المعدلة لحل مشكلة المحاذاة والتمركز والظهور الاحترافي
         function showToast(text) {
             const toast = document.getElementById('toast-notif');
             document.getElementById('toast-text').innerText = text;
             
-            // إظهار التنبيه وتحريكه خفيفاً لأسفل بسلاسة
             toast.classList.remove('opacity-0', 'pointer-events-none', 'top-[85px]');
             toast.classList.add('opacity-100', 'top-[105px]');
             
             setTimeout(() => {
-                // إخفاء التنبيه وإعادته لمكانه الأصلي
                 toast.classList.remove('opacity-100', 'top-[105px]');
                 toast.classList.add('opacity-0', 'pointer-events-none', 'top-[95px]');
             }, 3000);
@@ -631,7 +630,7 @@
                         text += `${index + 1}. ${item.name} | *Qty:* ${item.qty} | *Couleur:* ${item.color} | *Prix:* ${item.price * item.qty} DH\n`;
                     });
                     text += `\n💵 *Total Final:* ${total} DH (Livraison: ${shipping === 0 ? 'Grate' : '30 DH'})\n\n`;
-                    text += `⚡ _Merci d'avoir choisi Marboha Shop. Votre commande est enregistrée dans notre système._`;
+                    text += `⚡ _Merci d'avoir choisi Marboha Shop._`;
 
                     cart = [];
                     updateCart();
@@ -653,7 +652,7 @@
                 return;
             }
             grid.innerHTML = items.map(p => `
-                <div class="product-card p-3 flex flex-col justify-between cursor-pointer" onclick="openProductModal(${p.id})">
+                <div class="product-card p-3 flex flex-col justify-between cursor-pointer" onclick="openProductModal('${p.id}')">
                     <div class="relative w-full aspect-square rounded-2xl overflow-hidden bg-neutral-100/60 dark:bg-neutral-900/60 flex items-center justify-center p-3 mb-3 border border-neutral-200/10 dark:border-neutral-800/10">
                         <img src="${p.img}" class="max-h-full max-w-full object-contain drop-shadow-sm transform hover:scale-105 transition duration-500">
                         <span class="absolute top-2 left-2 text-[8px] bg-blue-600 text-white font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider">${p.category}</span>
@@ -675,6 +674,7 @@
             const txt = document.getElementById('live-sales-text');
 
             setInterval(() => {
+                if (productsDB.length === 0) return;
                 const randomProduct = productsDB[Math.floor(Math.random() * productsDB.length)];
                 const randomCity = cities[Math.floor(Math.random() * cities.length)];
                 
@@ -697,8 +697,6 @@
             document.documentElement.classList.add('dark-mode');
         }
         
-        renderProducts(productsDB);
-        updateCart();
         startLiveSalesSimulation();
     </script>
 </body>
