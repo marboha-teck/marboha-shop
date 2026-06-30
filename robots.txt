@@ -1,0 +1,19 @@
+# Robots.txt for https://www.marbouha.shop
+
+User-agent: *
+Allow: /
+Allow: /index.html
+
+# حظر الأكواد والروابط المتغيرة لرسائل الواتساب لحماية الأرشفة
+Disallow: /cgi-bin/
+Disallow: *?text=*
+
+# تحديد مهلة زمنية خفيفة للزحف لحماية سرعة الموقع
+Crawl-delay: 1
+
+# النطاق الأساسي
+Host: https://www.marbouha.shop
+
+# روابط خرائط الموقع المعتمدة
+Sitemap: https://www.marbouha.shop/sitemap.xml
+Sitemap: https://www.marbouha.shop/sitemap-images.xml

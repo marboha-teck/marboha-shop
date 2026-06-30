@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- رابط المتجر الرئيسي والواجهة الأساسية -->
+  <url>
+    <loc>https://www.marbouha.shop/</loc>
+    <lastmod>2026-06-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.00</priority>
+  </url>
+  <!-- رابط مرجعي إضافي لضمان الفهرسة الكاملة -->
+  <url>
+    <loc>https://www.marbouha.shop/index.html</loc>
+    <lastmod>2026-06-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
+  </url>
+</urlset>
