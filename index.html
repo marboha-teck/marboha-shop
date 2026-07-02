@@ -12,16 +12,16 @@
         :root {
             --apple-blue: #0071e3;
             --ios-bg: #f5f5f7;
-            --card-bg: rgba(255, 255, 255, 0.75);
+            --card-bg: rgba(255, 255, 255, 0.85);
             --ios-text: #1d1d1f;
-            --border-color: rgba(0, 0, 0, 0.05);
+            --border-color: rgba(0, 0, 0, 0.08);
             --blur-val: 20px;
         }
         .dark-mode {
-            --ios-bg: #000000;
-            --card-bg: rgba(22, 22, 23, 0.75);
+            --ios-bg: #0b0f19;
+            --card-bg: rgba(22, 28, 45, 0.85);
             --ios-text: #f5f5f7;
-            --border-color: rgba(255, 255, 255, 0.08);
+            --border-color: rgba(255, 255, 255, 0.1);
         }
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -104,6 +104,8 @@
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
             transition: all 0.3s ease;
         }
+
+        /* تعديل شكل نافذة تفاصيل المنتج والبراندات لتصبح بيضاء ناصعة ومميزة دائماً */
         #product-modal, #brand-sub-modal {
             position: fixed;
             bottom: 20px;
@@ -113,22 +115,48 @@
             max-width: 550px;
             z-index: 4500;
             border-radius: 32px;
+            background-color: #ffffff !important; /* خلفية بيضاء ناصعة دائماً */
+            color: #111827 !important; /* نصوص داكنة وواضحة جداً */
+            border: 2px solid #f1f5f9;
             transition: transform 0.5s cubic-bezier(0.32, 0.94, 0.6, 1);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.2);
         }
         #product-modal.open, #brand-sub-modal.open { transform: translate(-50%, 0); }
-        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.25); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 3500; display: none; }
+        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 3500; display: none; }
         .overlay.active { display: block; }
 
-        /* ستايل أزرار الشركات */
-        .cat-btn { padding: 9px 22px; border-radius: 50px; font-weight: 700; font-size: 11px; background: transparent; color: var(--ios-text); border: 1px solid var(--border-color); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); flex-shrink: 0; text-transform: uppercase; letter-spacing: 0.5px; }
-        .cat-btn:hover { transform: scale(1.04); border-color: rgba(0, 113, 227, 0.4); }
-        .cat-btn.active { background: var(--ios-text); color: var(--ios-bg); border-color: var(--ios-text); }
+        /* الأشكال والألوان الجديدة لأزرار الكاتيجوري - أصبحت أكبر وأجمل */
+        .cat-btn { 
+            padding: 12px 28px; 
+            border-radius: 16px; 
+            font-weight: 800; 
+            font-size: 13px; 
+            background: #ffffff; 
+            color: #1e293b; 
+            border: 2px solid #e2e8f0; 
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); 
+            flex-shrink: 0; 
+            text-transform: uppercase; 
+            letter-spacing: 0.8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+        .cat-btn:hover { 
+            transform: translateY(-3px) scale(1.03); 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+        
+        /* تلوين ناصع وواضح عند تفعيل كل زر براند */
+        #cat-all.active { bg-color: #1e293b; background: #1e293b; color: #ffffff; border-color: #1e293b; }
+        #cat-Ilron.active { background: linear-gradient(135deg, #eab308, #ca8a04); color: #ffffff; border-color: #eab308; }
+        #cat-Samsung.active { background: linear-gradient(135deg, #1d4ed8, #1e40af); color: #ffffff; border-color: #1d4ed8; }
+        #cat-Xiaomi.active { background: linear-gradient(135deg, #ea580c, #c2410c); color: #ffffff; border-color: #ea580c; }
+        #cat-Apple.active { background: linear-gradient(135deg, #000000, #1f2937); color: #ffffff; border-color: #000000; }
+        #cat-Oraimo.active { background: linear-gradient(135deg, #16a34a, #15803d); color: #ffffff; border-color: #16a34a; }
+        #cat-Autres.active { background: linear-gradient(135deg, #7c3aed, #6d28d9); color: #ffffff; border-color: #7c3aed; }
         
         .product-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 28px; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
         .product-card:hover { transform: translateY(-6px); box-shadow: 0 20px 35px rgba(0,0,0,0.05); border-color: rgba(0, 113, 227, 0.3); }
 
-        /* ستايلات ألوان الأجواء المخصصة للنافذة المنبثقة */
         .theme-ilron { background: linear-gradient(135deg, #1c1917, #292524) !important; color: #facc15 !important; border-color: #facc15 !important; }
         .theme-samsung { background: linear-gradient(135deg, #0b192c, #1e3e62) !important; color: #ffffff !important; border-color: #38bdf8 !important; }
         .theme-xiaomi { background: linear-gradient(135deg, #ff6700, #e05300) !important; color: #ffffff !important; border-color: #ffffff !important; }
@@ -193,24 +221,24 @@
         </nav>
     </div>
 
-    <!-- النافذة المنبثقة الذكية المتغيرة الألوان والأجواء تلقائياً حسب الشركة المحددة -->
-    <div id="brand-sub-modal" class="p-6 md:p-8 flex flex-col transition-all duration-500 border shadow-2xl">
+    <!-- نافذة تصنيفات الماركة الفرعية - تم تحسين تباينها لتصبح بيضاء ناصعة ومميزة -->
+    <div id="brand-sub-modal" class="p-6 md:p-8 flex flex-col transition-all duration-500 shadow-2xl bg-white text-slate-900">
         <div class="flex justify-between items-center mb-4">
-            <h3 class="text-sm font-extrabold uppercase tracking-wider" id="sub-modal-brand-name">Marque</h3>
-            <button onclick="closeAll()" class="w-8 h-8 rounded-full bg-black/10 dark:bg-white/10 flex items-center justify-center font-normal text-lg opacity-70 hover:opacity-100 transition">&times;</button>
+            <h3 class="text-sm font-black uppercase tracking-wider text-slate-800" id="sub-modal-brand-name">Marque</h3>
+            <button onclick="closeAll()" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-500 hover:bg-slate-200 transition">&times;</button>
         </div>
-        <p class="text-xs opacity-80 mb-6 font-medium">Filtrer les produits de cette marque par catégorie :</p>
+        <p class="text-xs text-slate-500 mb-6 font-semibold">Filtrer les produits de cette marque par catégorie :</p>
         <div class="grid grid-cols-1 gap-3">
-            <button onclick="filterBySubCategory('Chargeurs')" class="w-full py-3.5 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl font-bold text-xs tracking-wider transition hover:scale-[1.02] flex items-center justify-center gap-2">
+            <button onclick="filterBySubCategory('Chargeurs')" class="w-full py-3.5 bg-slate-50 hover:bg-blue-50 text-slate-800 border border-slate-200 rounded-xl font-bold text-xs tracking-wider transition hover:scale-[1.02] flex items-center justify-center gap-2">
                 ⚡ Chargeurs & Alimentation
             </button>
-            <button onclick="filterBySubCategory('Audio')" class="w-full py-3.5 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl font-bold text-xs tracking-wider transition hover:scale-[1.02] flex items-center justify-center gap-2">
+            <button onclick="filterBySubCategory('Audio')" class="w-full py-3.5 bg-slate-50 hover:bg-blue-50 text-slate-800 border border-slate-200 rounded-xl font-bold text-xs tracking-wider transition hover:scale-[1.02] flex items-center justify-center gap-2">
                 🎧 Audio & Écouteurs
             </button>
-            <button onclick="filterBySubCategory('Montres')" class="w-full py-3.5 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl font-bold text-xs tracking-wider transition hover:scale-[1.02] flex items-center justify-center gap-2">
+            <button onclick="filterBySubCategory('Montres')" class="w-full py-3.5 bg-slate-50 hover:bg-blue-50 text-slate-800 border border-slate-200 rounded-xl font-bold text-xs tracking-wider transition hover:scale-[1.02] flex items-center justify-center gap-2">
                 ⌚ Montres Connectées
             </button>
-            <button onclick="filterBySubCategory('all')" class="w-full py-3.5 bg-black/20 dark:bg-white/20 border border-black/30 dark:border-white/30 rounded-xl font-extrabold text-xs tracking-wider transition hover:opacity-90 flex items-center justify-center gap-2 mt-2">
+            <button onclick="filterBySubCategory('all')" class="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-extrabold text-xs tracking-wider transition hover:scale-[1.01] flex items-center justify-center gap-2 mt-2 shadow-sm">
                 📦 Voir tout de cette marque
             </button>
         </div>
@@ -249,30 +277,31 @@
         </div>
     </div>
 
-    <div id="product-modal" class="glass-effect p-6 md:p-8 flex flex-col max-h-[85vh] overflow-y-auto">
+    <!-- نافذة تفاصيل المنتج المعدلة لتصبح بيضاء ناصعة والوان واضحة جداً وقوية للزبون -->
+    <div id="product-modal" class="p-6 md:p-8 flex flex-col max-h-[85vh] overflow-y-auto bg-white text-slate-900 border-2 border-slate-100">
         <div class="flex justify-between items-center mb-5">
-            <span id="modal-category" class="text-[9px] bg-blue-500/10 text-blue-600 font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">Premium</span>
-            <button onclick="closeAll()" class="w-8 h-8 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center font-normal text-lg opacity-60 hover:opacity-100 transition">&times;</button>
+            <span id="modal-category" class="text-[10px] bg-blue-600 text-white font-extrabold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">Premium</span>
+            <button onclick="closeAll()" class="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center font-bold text-lg text-slate-500 hover:bg-slate-200 transition">&times;</button>
         </div>
         <div class="flex flex-col items-center mb-6">
-            <div class="h-44 md:h-52 flex items-center justify-center mb-4 bg-neutral-100/60 dark:bg-neutral-900/60 w-full rounded-2xl p-4 border border-neutral-200/30 dark:border-neutral-800/30">
+            <div class="h-48 md:h-56 flex items-center justify-center mb-5 bg-slate-50 w-full rounded-2xl p-4 border border-slate-100 shadow-inner">
                 <img id="modal-img" src="" class="max-h-full object-contain drop-shadow-md">
             </div>
-            <h2 id="modal-name" class="text-xl font-extrabold tracking-tight mb-1 text-center uppercase">Product</h2>
-            <p id="modal-price" class="text-blue-600 font-extrabold text-xl mb-3">0 DH</p>
-            <p id="modal-desc" class="text-neutral-400 text-xs text-center max-w-sm leading-relaxed">Description detail.</p>
+            <h2 id="modal-name" class="text-2xl font-black tracking-tight mb-1 text-center text-slate-900 uppercase">Product</h2>
+            <p id="modal-price" class="text-blue-600 font-black text-2xl mb-3">0 DH</p>
+            <p id="modal-desc" class="text-slate-600 text-xs text-center max-w-sm leading-relaxed font-medium">Description detail.</p>
         </div>
-        <div class="space-y-5 border-t border-neutral-200/50 dark:border-neutral-800/50 pt-5">
+        <div class="space-y-5 border-t border-slate-100 pt-5">
             <div>
-                <label class="block text-[10px] font-bold opacity-40 uppercase tracking-widest text-center mb-2.5">Couleurs Disponibles</label>
+                <label class="block text-[10px] font-extrabold text-slate-400 uppercase tracking-widest text-center mb-3">Couleurs Disponibles</label>
                 <div id="modal-colors" class="flex gap-2 justify-center"></div>
             </div>
-            <div class="flex items-center justify-center gap-4 bg-neutral-100 dark:bg-neutral-900 w-32 mx-auto py-1.5 px-2 rounded-xl border border-neutral-200/40 dark:border-neutral-800/40">
-                <button onclick="changeQty(-1)" class="w-7 h-7 text-sm font-bold opacity-60 hover:opacity-100 transition">-</button>
-                <span id="modal-qty" class="text-sm font-bold w-6 text-center">1</span>
-                <button onclick="changeQty(1)" class="w-7 h-7 text-sm font-bold opacity-60 hover:opacity-100 transition">+</button>
+            <div class="flex items-center justify-center gap-5 bg-slate-100 w-36 mx-auto py-2 px-3 rounded-xl border border-slate-200 shadow-sm">
+                <button onclick="changeQty(-1)" class="w-8 h-8 text-lg font-black text-slate-600 hover:text-blue-600 transition">-</button>
+                <span id="modal-qty" class="text-base font-black text-slate-900 w-6 text-center">1</span>
+                <button onclick="changeQty(1)" class="w-8 h-8 text-lg font-black text-slate-600 hover:text-blue-600 transition">+</button>
             </div>
-            <button onclick="addModalItemToCart()" class="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold text-xs tracking-wider transition shadow-md mt-2">AJOUTER AU SAC DE COMMANDE</button>
+            <button onclick="addModalItemToCart()" class="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-black text-xs uppercase tracking-widest transition shadow-md hover:scale-[1.01] mt-2">AJOUTER AU SAC DE COMMANDE</button>
         </div>
     </div>
 
@@ -287,25 +316,25 @@
         </section>
 
         <div id="catalog" class="max-w-6xl mx-auto py-4 px-4 md:px-6">
-            <!-- شريط الشركات الجديد المستبدل بالفئات القديمة تماماً بناءً على طلبك -->
-            <div class="flex gap-2.5 mb-8 overflow-x-auto pb-3 no-scrollbar">
-                <button onclick="resetToAll()" class="cat-btn active" id="cat-all">Tout</button>
-                <button onclick="handleBrandSelection('Ilron')" class="cat-btn border-yellow-500/30" id="cat-Ilron">Ilron</button>
-                <button onclick="handleBrandSelection('Samsung')" class="cat-btn border-blue-500/30" id="cat-Samsung">Samsung</button>
-                <button onclick="handleBrandSelection('Xiaomi')" class="cat-btn border-orange-500/30" id="cat-Xiaomi">Xiaomi</button>
-                <button onclick="handleBrandSelection('Apple')" class="cat-btn border-neutral-500/30" id="cat-Apple">Apple</button>
-                <button onclick="handleBrandSelection('Oraimo')" class="cat-btn border-green-500/30" id="cat-Oraimo">Oraimo</button>
-                <button onclick="handleBrandSelection('Autres')" class="cat-btn border-purple-500/30 bg-purple-500/5" id="cat-Autres">Autres Marques</button>
+            <!-- أزرار الكاتيجوري الجديدة المحسنة بالكامل لتصبح أكبر وأوضح وبألوان مميزة -->
+            <div class="flex gap-3 mb-10 overflow-x-auto pb-4 no-scrollbar pt-2">
+                <button onclick="resetToAll()" class="cat-btn active" id="cat-all">Tout 📦</button>
+                <button onclick="handleBrandSelection('Ilron')" class="cat-btn" id="cat-Ilron">Ilron ✨</button>
+                <button onclick="handleBrandSelection('Samsung')" class="cat-btn" id="cat-Samsung">Samsung 📱</button>
+                <button onclick="handleBrandSelection('Xiaomi')" class="cat-btn" id="cat-Xiaomi">Xiaomi 🟠</button>
+                <button onclick="handleBrandSelection('Apple')" class="cat-btn" id="cat-Apple">Apple 🍏</button>
+                <button onclick="handleBrandSelection('Oraimo')" class="cat-btn" id="cat-Oraimo">Oraimo ⚡</button>
+                <button onclick="handleBrandSelection('Autres')" class="cat-btn" id="cat-Autres">Autres Marques 🔮</button>
             </div>
             
-            <div id="loading-indicator" class="text-center py-10 font-bold opacity-50 text-sm">Chargement des produits depuis le serveur Google...</div>
+            <div id="loading-indicator" class="text-center py-10 font-bold opacity-50 text-sm">Chargement des produits depuis le serveur...</div>
             <div id="products-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6"></div>
         </div>
 
         <section class="py-14 px-4 md:px-6 border-t border-neutral-200/40 dark:border-neutral-800/40 bg-neutral-100/20 dark:bg-neutral-900/10">
             <div class="max-w-5xl mx-auto text-center">
                 <h3 class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-3">Témoignages</h3>
-                <h2 class="text-xl md:text-2xl font-extrabold tracking-tight mb-10 uppercase">Ce que disent nos clients ⭐⭐⭐⭐⭐</h2>
+                <h2 class="text-xl md:text-2xl font-extrabold tracking-tight mb-10 uppercase">Ce que dicen nos clients ⭐⭐⭐⭐⭐</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                     <div class="product-card p-5 text-left flex flex-col justify-between">
                         <p class="text-neutral-500 dark:text-neutral-300 text-xs italic leading-relaxed mb-4">"Livraison très rapide à Rabat. Le chargeur Samsung 65W est 100% original. Je recommande Marboha Shop !"</p>
@@ -396,11 +425,8 @@
         let currentSelectedProduct = null;
         let currentQty = 1;
         let currentSelectedColor = "";
-        
-        // تتبع الشركة الحالية المحددة
         let selectedBrand = "all";
 
-        // مصفوفة تجميع الشركات الستة
         const bundledBrands = ["laxasfit", "regrsi", "stc-plus", "sunpin"];
 
         const productsRef = ref(db, "products/");
@@ -446,53 +472,37 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         };
 
-        // دالة الضغط على الشركة وتطبيق نمط وجو الألوان المخصص تلقائياً
         window.handleBrandSelection = function(brandName) {
             selectedBrand = brandName;
             
-            // تفعيل الزر النشط بصرياً
             document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
             const activeBtn = document.getElementById(`cat-${brandName}`);
             if(activeBtn) activeBtn.classList.add('active');
 
-            // إزالة الأجواء السابقة من المودال
             const modalElement = document.getElementById('brand-sub-modal');
-            modalElement.className = "p-6 md:p-8 flex flex-col transition-all duration-500 border shadow-2xl"; 
+            modalElement.className = "p-6 md:p-8 flex flex-col transition-all duration-500 shadow-2xl bg-white text-slate-900 border-2 border-slate-100"; 
 
-            // تطبيق الجو واللون المخصص للشركة المحددة
-            if (brandName.toLowerCase() === 'ilron') modalElement.classList.add('theme-ilron');
-            else if (brandName.toLowerCase() === 'samsung') modalElement.classList.add('theme-samsung');
-            else if (brandName.toLowerCase() === 'xiaomi') modalElement.classList.add('theme-xiaomi');
-            else if (brandName.toLowerCase() === 'apple') modalElement.classList.add('theme-apple');
-            else if (brandName.toLowerCase() === 'oraimo') modalElement.classList.add('theme-oraimo');
-            else if (brandName.toLowerCase() === 'autres') modalElement.classList.add('theme-autres');
-
-            // فتح النافذة المنبثقة
             document.getElementById('sub-modal-brand-name').innerText = brandName === 'Autres' ? 'Autres Marques' : brandName.toUpperCase();
             document.getElementById('brand-sub-modal').classList.add('open');
             document.getElementById('overlay').classList.add('active');
         };
 
-        // دالة الفلترة الذكية بناءً على الفئة الفرعية ونوع الشركة
         window.filterBySubCategory = function(subCategory) {
             go('home-view');
             closeAll();
 
             let filtered = productsDB;
 
-            // 1. فلترة الشركة (براند)
             if (selectedBrand !== 'all') {
                 if (selectedBrand === 'Autres') {
-                    // تصفية المنتجات التي تنتمي لأي شركة من الشركات الأربعة المجمعة
-                    filtered = filtered.filter(p => p.brand && bundledBrands.includes(p.brand.toLowerCase()));
+                    filtered = filtered.filter(p => p.brand && bundledBrands.includes(p.brand.trim().toLowerCase()));
                 } else {
-                    filtered = filtered.filter(p => p.brand && p.brand.toLowerCase() === selectedBrand.toLowerCase());
+                    filtered = filtered.filter(p => p.brand && p.brand.trim().toLowerCase() === selectedBrand.trim().toLowerCase());
                 }
             }
 
-            // 2. فلترة فئة المنتج الفرعية (Chargeurs, Audio, Montres)
             if (subCategory !== 'all') {
-                filtered = filtered.filter(p => p.category && p.category.toLowerCase() === subCategory.toLowerCase());
+                filtered = filtered.filter(p => p.category && p.category.trim().toLowerCase() === subCategory.trim().toLowerCase());
             }
 
             renderProducts(filtered);
@@ -540,12 +550,12 @@
             const colorsContainer = document.getElementById('modal-colors');
             if (product.colors && product.colors.length > 0) {
                 colorsContainer.innerHTML = product.colors.map((color, index) => `
-                    <button onclick="selectColor('${color}', this)" class="color-opt px-3 py-1.5 rounded-xl border text-[11px] font-bold transition-all ${index === 0 ? 'bg-blue-600 text-white border-blue-600 scale-105' : 'bg-neutral-100 dark:bg-neutral-900'}" type="button">
+                    <button onclick="selectColor('${color}', this)" class="color-opt px-4 py-2 rounded-xl border text-[12px] font-extrabold transition-all ${index === 0 ? 'bg-blue-600 text-white border-blue-600 scale-105 shadow-sm' : 'bg-slate-50 border-slate-200 text-slate-800'}" type="button">
                         ${color}
                     </button>
                 `).join('');
             } else {
-                colorsContainer.innerHTML = `<span class="text-xs opacity-50">Par défaut</span>`;
+                colorsContainer.innerHTML = `<span class="text-xs text-slate-400 font-bold">Par défaut</span>`;
             }
 
             document.getElementById('product-modal').classList.add('open');
@@ -555,11 +565,11 @@
         window.selectColor = function(color, btn) {
             currentSelectedColor = color;
             document.querySelectorAll('.color-opt').forEach(b => {
-                b.classList.remove('bg-blue-600', 'text-white', 'scale-105', 'border-blue-600');
-                b.classList.add('bg-neutral-100');
+                b.classList.remove('bg-blue-600', 'text-white', 'scale-105', 'border-blue-600', 'shadow-sm');
+                b.classList.add('bg-slate-50', 'border-slate-200', 'text-slate-800');
             });
-            btn.classList.add('bg-blue-600', 'text-white', 'scale-105', 'border-blue-600');
-            btn.classList.remove('bg-neutral-100');
+            btn.classList.add('bg-blue-600', 'text-white', 'scale-105', 'border-blue-600', 'shadow-sm');
+            btn.classList.remove('bg-slate-50', 'border-slate-200', 'text-slate-800');
         };
 
         window.changeQty = function(value) {
@@ -601,7 +611,7 @@
             const submitBtn = document.getElementById('msg-submit-btn');
             const accessKey = document.getElementById('web3-access-key').value;
 
-            submitBtn.innerText = "ENVOI EN COURس...";
+            submitBtn.innerText = "ENVOI EN COURS...";
             submitBtn.disabled = true;
 
             const name = document.getElementById('msg-name').value;
