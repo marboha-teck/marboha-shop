@@ -105,7 +105,6 @@
             transition: all 0.3s ease;
         }
 
-        /* تعديل شكل نافذة تفاصيل المنتج والبراندات لتصبح بيضاء ناصعة ومميزة دائماً */
         #product-modal, #brand-sub-modal {
             position: fixed;
             bottom: 20px;
@@ -115,8 +114,8 @@
             max-width: 550px;
             z-index: 4500;
             border-radius: 32px;
-            background-color: #ffffff !important; /* خلفية بيضاء ناصعة دائماً */
-            color: #111827 !important; /* نصوص داكنة وواضحة جداً */
+            background-color: #ffffff !important;
+            color: #111827 !important;
             border: 2px solid #f1f5f9;
             transition: transform 0.5s cubic-bezier(0.32, 0.94, 0.6, 1);
             box-shadow: 0 25px 60px rgba(0,0,0,0.2);
@@ -125,7 +124,6 @@
         .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 3500; display: none; }
         .overlay.active { display: block; }
 
-        /* الأشكال والألوان الجديدة لأزرار الكاتيجوري - أصبحت أكبر وأجمل */
         .cat-btn { 
             padding: 12px 28px; 
             border-radius: 16px; 
@@ -145,8 +143,7 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.08);
         }
         
-        /* تلوين ناصع وواضح عند تفعيل كل زر براند */
-        #cat-all.active { bg-color: #1e293b; background: #1e293b; color: #ffffff; border-color: #1e293b; }
+        #cat-all.active { background: #1e293b; color: #ffffff; border-color: #1e293b; }
         #cat-Ilron.active { background: linear-gradient(135deg, #eab308, #ca8a04); color: #ffffff; border-color: #eab308; }
         #cat-Samsung.active { background: linear-gradient(135deg, #1d4ed8, #1e40af); color: #ffffff; border-color: #1d4ed8; }
         #cat-Xiaomi.active { background: linear-gradient(135deg, #ea580c, #c2410c); color: #ffffff; border-color: #ea580c; }
@@ -221,7 +218,6 @@
         </nav>
     </div>
 
-    <!-- نافذة تصنيفات الماركة الفرعية - تم تحسين تباينها لتصبح بيضاء ناصعة ومميزة -->
     <div id="brand-sub-modal" class="p-6 md:p-8 flex flex-col transition-all duration-500 shadow-2xl bg-white text-slate-900">
         <div class="flex justify-between items-center mb-4">
             <h3 class="text-sm font-black uppercase tracking-wider text-slate-800" id="sub-modal-brand-name">Marque</h3>
@@ -277,15 +273,15 @@
         </div>
     </div>
 
-    <!-- نافذة تفاصيل المنتج المعدلة لتصبح بيضاء ناصعة والوان واضحة جداً وقوية للزبون -->
+    <!-- نافذة تفاصيل المنتج المعدلة لتصبح الصور بداخلها ممتدة واحترافية وبدون هوامش مشوهة -->
     <div id="product-modal" class="p-6 md:p-8 flex flex-col max-h-[85vh] overflow-y-auto bg-white text-slate-900 border-2 border-slate-100">
         <div class="flex justify-between items-center mb-5">
             <span id="modal-category" class="text-[10px] bg-blue-600 text-white font-extrabold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">Premium</span>
             <button onclick="closeAll()" class="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center font-bold text-lg text-slate-500 hover:bg-slate-200 transition">&times;</button>
         </div>
         <div class="flex flex-col items-center mb-6">
-            <div class="h-48 md:h-56 flex items-center justify-center mb-5 bg-slate-50 w-full rounded-2xl p-4 border border-slate-100 shadow-inner">
-                <img id="modal-img" src="" class="max-h-full object-contain drop-shadow-md">
+            <div class="w-full max-w-[320px] aspect-square flex items-center justify-center mb-5 bg-slate-50 rounded-2xl overflow-hidden border border-slate-100 shadow-sm">
+                <img id="modal-img" src="" class="w-full h-full object-cover">
             </div>
             <h2 id="modal-name" class="text-2xl font-black tracking-tight mb-1 text-center text-slate-900 uppercase">Product</h2>
             <p id="modal-price" class="text-blue-600 font-black text-2xl mb-3">0 DH</p>
@@ -316,7 +312,6 @@
         </section>
 
         <div id="catalog" class="max-w-6xl mx-auto py-4 px-4 md:px-6">
-            <!-- أزرار الكاتيجوري الجديدة المحسنة بالكامل لتصبح أكبر وأوضح وبألوان مميزة -->
             <div class="flex gap-3 mb-10 overflow-x-auto pb-4 no-scrollbar pt-2">
                 <button onclick="resetToAll()" class="cat-btn active" id="cat-all">Tout 📦</button>
                 <button onclick="handleBrandSelection('Ilron')" class="cat-btn" id="cat-Ilron">Ilron ✨</button>
@@ -759,6 +754,7 @@
                 });
         };
 
+        // دالة الـ ريندر المحسنة بالكامل لحل مشكلة الفراغات الرمادية وتناسق حجم الصور
         function renderProducts(items) {
             const grid = document.getElementById('products-grid');
             if(items.length === 0) {
@@ -767,15 +763,15 @@
             }
             grid.innerHTML = items.map(p => `
                 <div class="product-card p-3 flex flex-col justify-between cursor-pointer" onclick="openProductModal('${p.id}')">
-                    <div class="relative w-full aspect-square rounded-2xl overflow-hidden bg-neutral-100/60 dark:bg-neutral-900/60 flex items-center justify-center p-3 mb-3 border border-neutral-200/10 dark:border-neutral-800/10">
-                        <img src="${p.img}" class="max-h-full max-w-full object-contain drop-shadow-sm transform hover:scale-105 transition duration-500">
+                    <div class="relative w-full aspect-square rounded-2xl overflow-hidden bg-white dark:bg-slate-950 flex items-center justify-center mb-3 border border-neutral-200/50 dark:border-neutral-800/40 shadow-sm">
+                        <img src="${p.img}" class="w-full h-full object-cover transform hover:scale-105 transition duration-500">
                         <span class="absolute top-2 left-2 text-[8px] bg-blue-600 text-white font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider">${p.brand ? p.brand : 'Premium'}</span>
                     </div>
-                    <div>
+                    <div class="px-1">
                         <h3 class="text-xs font-extrabold tracking-tight uppercase truncate mb-0.5">${p.name}</h3>
                         <div class="flex justify-between items-center mt-1.5">
-                            <span class="text-blue-600 font-extrabold text-sm">${p.price} DH</span>
-                            <span class="text-[9px] font-bold opacity-30 uppercase tracking-widest">${p.category} →</span>
+                            <span class="text-blue-600 dark:text-blue-400 font-extrabold text-sm">${p.price} DH</span>
+                            <span class="text-[9px] font-bold opacity-40 uppercase tracking-widest">${p.category} →</span>
                         </div>
                     </div>
                 </div>
