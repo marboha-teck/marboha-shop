@@ -153,13 +153,6 @@
         
         .product-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 28px; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
         .product-card:hover { transform: translateY(-6px); box-shadow: 0 20px 35px rgba(0,0,0,0.05); border-color: rgba(0, 113, 227, 0.3); }
-
-        .theme-ilron { background: linear-gradient(135deg, #1c1917, #292524) !important; color: #facc15 !important; border-color: #facc15 !important; }
-        .theme-samsung { background: linear-gradient(135deg, #0b192c, #1e3e62) !important; color: #ffffff !important; border-color: #38bdf8 !important; }
-        .theme-xiaomi { background: linear-gradient(135deg, #ff6700, #e05300) !important; color: #ffffff !important; border-color: #ffffff !important; }
-        .theme-apple { background: linear-gradient(135deg, #171717, #0a0a0a) !important; color: #f5f5f7 !important; border-color: #404040 !important; }
-        .theme-oraimo { background: linear-gradient(135deg, #111827, #030712) !important; color: #22c55e !important; border-color: #22c55e !important; }
-        .theme-autres { background: linear-gradient(135deg, #2e1065, #4c1d95) !important; color: #e9d5ff !important; border-color: #c084fc !important; }
     </style>
 </head>
 <body>
@@ -273,16 +266,20 @@
         </div>
     </div>
 
-    <!-- نافذة تفاصيل المنتج المعدلة لتصبح الصور بداخلها ممتدة واحترافية وبدون هوامش مشوهة -->
+    <!-- نافذة تفاصيل المنتج المعدلة لتشمل حاوية ألبوم الصور المصغرة -->
     <div id="product-modal" class="p-6 md:p-8 flex flex-col max-h-[85vh] overflow-y-auto bg-white text-slate-900 border-2 border-slate-100">
         <div class="flex justify-between items-center mb-5">
             <span id="modal-category" class="text-[10px] bg-blue-600 text-white font-extrabold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">Premium</span>
             <button onclick="closeAll()" class="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center font-bold text-lg text-slate-500 hover:bg-slate-200 transition">&times;</button>
         </div>
         <div class="flex flex-col items-center mb-6">
-            <div class="w-full max-w-[320px] aspect-square flex items-center justify-center mb-5 bg-slate-50 rounded-2xl overflow-hidden border border-slate-100 shadow-sm">
+            <div class="w-full max-w-[320px] aspect-square flex items-center justify-center mb-3 bg-slate-50 rounded-2xl overflow-hidden border border-slate-100 shadow-sm">
                 <img id="modal-img" src="" class="w-full h-full object-cover">
             </div>
+            
+            <!-- إضافة حاوية الصور المصغرة (ألبوم الصور النشط) هنا -->
+            <div id="modal-thumbnails" class="flex gap-2 justify-center mb-4 overflow-x-auto max-w-[320px] no-scrollbar py-1"></div>
+            
             <h2 id="modal-name" class="text-2xl font-black tracking-tight mb-1 text-center text-slate-900 uppercase">Product</h2>
             <p id="modal-price" class="text-blue-600 font-black text-2xl mb-3">0 DH</p>
             <p id="modal-desc" class="text-slate-600 text-xs text-center max-w-sm leading-relaxed font-medium">Description detail.</p>
@@ -528,6 +525,7 @@
             renderProducts(filtered);
         };
 
+        // دالة الـ Modal المُحدّثة لإنشاء ومعاينة ألبوم الصور المصغرة بشكل احترافي ومتجاوب
         window.openProductModal = function(id) {
             const product = productsDB.find(x => x.id === id);
             if(!product) return;
@@ -542,6 +540,20 @@
             document.getElementById('modal-desc').innerText = product.desc;
             document.getElementById('modal-qty').innerText = currentQty;
 
+            // بناء شريط الصور المصغرة (الـ Thumbnails) ديناميكياً من مصفوفة Firebase الجديدة
+            const thumbContainer = document.getElementById('modal-thumbnails');
+            if (product.images && Array.isArray(product.images) && product.images.length > 1) {
+                thumbContainer.innerHTML = product.images.map((imgUrl, index) => `
+                    <button onclick="changeModalImage('${imgUrl}', this)" class="thumb-opt w-12 h-12 rounded-xl overflow-hidden border-2 transition-all shrink-0 ${index === 0 ? 'border-blue-600 scale-105 shadow-sm' : 'border-slate-200 opacity-60 hover:opacity-100'}">
+                        <img src="${imgUrl}" class="w-full h-full object-cover">
+                    </button>
+                `).join('');
+                thumbContainer.classList.remove('hidden');
+            } else {
+                thumbContainer.innerHTML = '';
+                thumbContainer.classList.add('hidden');
+            }
+
             const colorsContainer = document.getElementById('modal-colors');
             if (product.colors && product.colors.length > 0) {
                 colorsContainer.innerHTML = product.colors.map((color, index) => `
@@ -555,6 +567,17 @@
 
             document.getElementById('product-modal').classList.add('open');
             document.getElementById('overlay').classList.add('active');
+        };
+
+        // دالة مضافة لتبديل الصورة الكبيرة عند الضغط على أي صورة مصغرة بنجاح
+        window.changeModalImage = function(url, btn) {
+            document.getElementById('modal-img').src = url;
+            document.querySelectorAll('.thumb-opt').forEach(b => {
+                b.classList.remove('border-blue-600', 'scale-105', 'shadow-sm');
+                b.classList.add('border-slate-200', 'opacity-60');
+            });
+            btn.classList.add('border-blue-600', 'scale-105', 'shadow-sm');
+            btn.classList.remove('border-slate-200', 'opacity-60');
         };
 
         window.selectColor = function(color, btn) {
@@ -754,7 +777,6 @@
                 });
         };
 
-        // دالة الـ ريندر المحسنة بالكامل لحل مشكلة الفراغات الرمادية وتناسق حجم الصور
         function renderProducts(items) {
             const grid = document.getElementById('products-grid');
             if(items.length === 0) {
