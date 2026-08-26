@@ -39,7 +39,7 @@
             border: 1px solid var(--border-color);
         }
         .hero-mesh {
-            min-height: 85vh;
+            min-height: 80vh;
             width: 100%;
             position: relative;
             display: flex;
@@ -93,7 +93,7 @@
 
         .apple-nav {
             position: fixed;
-            top: 15px;
+            top: 20px;
             left: 50%;
             transform: translateX(-50%);
             width: 94%;
@@ -153,15 +153,29 @@
         
         .product-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 28px; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
         .product-card:hover { transform: translateY(-6px); box-shadow: 0 20px 35px rgba(0,0,0,0.05); border-color: rgba(0, 113, 227, 0.3); }
+
+        .interactive-3d-box {
+            cursor: grab;
+            user-select: none;
+            touch-action: none;
+        }
+        .interactive-3d-box:active {
+            cursor: grabbing;
+        }
     </style>
 </head>
 <body>
 
     <div class="overlay" id="overlay" onclick="closeAll()"></div>
     
-    <div id="toast-notif" class="fixed top-[95px] left-1/2 -translate-x-1/2 glass-effect px-6 py-3 rounded-full font-bold text-xs z-[5000] opacity-0 pointer-events-none transition-all duration-300 shadow-lg flex items-center gap-2 whitespace-nowrap">
+    <div id="toast-notif" class="fixed top-[100px] left-1/2 -translate-x-1/2 glass-effect px-6 py-3 rounded-full font-bold text-xs z-[5000] opacity-0 pointer-events-none transition-all duration-300 shadow-lg flex items-center gap-2 whitespace-nowrap">
         <span>✨</span> <span id="toast-text">Sac mis à jour</span>
     </div>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/212771737049" target="_blank" class="fixed bottom-6 right-6 w-14 h-14 bg-emerald-500 text-white rounded-full flex items-center justify-center shadow-2xl z-40 hover:scale-110 active:scale-95 transition-all duration-300">
+        <svg width="28" height="28" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.572-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+    </a>
 
     <div id="live-sales-popup" class="fixed bottom-6 left-6 glass-effect p-4 rounded-2xl shadow-xl z-30 opacity-0 transform translate-y-4 transition-all duration-500 max-w-sm flex items-center gap-3 pointer-events-none">
         <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shrink-0"></div>
@@ -211,7 +225,7 @@
         </nav>
     </div>
 
-    <div id="brand-sub-modal" class="p-6 md:p-8 flex flex-col transition-all duration-500 shadow-2xl bg-white text-slate-900">
+    <div id="brand-sub-modal" class="p-6 md:p-8 flex flex-col transition-all duration-500 shadow-2xl bg-white text-slate-900 border-2 border-slate-100">
         <div class="flex justify-between items-center mb-4">
             <h3 class="text-sm font-black uppercase tracking-wider text-slate-800" id="sub-modal-brand-name">Marque</h3>
             <button onclick="closeAll()" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-500 hover:bg-slate-200 transition">&times;</button>
@@ -245,17 +259,39 @@
             </div>
         </div>
         <div id="cart-items" class="flex-1 overflow-y-auto p-4 space-y-3"></div>
+        
+        <!-- Coupon Section -->
+        <div class="px-4 py-2 flex gap-2">
+            <input type="text" id="coupon-code" placeholder="Code Promo (ex: MARBOHA10)" class="flex-1 text-xs p-2.5 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white/50 dark:bg-black/50 uppercase font-bold focus:outline-none">
+            <button onclick="applyCoupon()" class="bg-neutral-900 dark:bg-white text-white dark:text-black font-extrabold text-[11px] px-4 py-2.5 rounded-xl transition hover:opacity-90">APPLIQUER</button>
+        </div>
+
         <div id="checkout-form-container" class="p-4 border-t border-neutral-200/50 dark:border-neutral-800/50 space-y-2.5 hidden">
             <p class="text-[10px] font-bold text-blue-600 uppercase tracking-wider">Informations de Validation</p>
             <div class="grid grid-cols-2 gap-2">
                 <input type="text" id="cust-name" placeholder="Nom Complet" class="w-full text-xs p-3 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white/50 dark:bg-black/50 focus:outline-none focus:border-blue-600 transition font-medium">
-                <input type="text" id="cust-city" placeholder="Ville" class="w-full text-xs p-3 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white/50 dark:bg-black/50 focus:outline-none focus:border-blue-600 transition font-medium">
+                <select id="cust-city" onchange="updateCart()" class="w-full text-xs p-3 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white/50 dark:bg-black/50 focus:outline-none focus:border-blue-600 transition font-medium">
+                    <option value="">Sélectionner la ville</option>
+                    <option value="Rabat">Rabat (20 DH)</option>
+                    <option value="Salé">Salé (20 DH)</option>
+                    <option value="Témara">Témara (20 DH)</option>
+                    <option value="Casablanca">Casablanca (35 DH)</option>
+                    <option value="Kenitra">Kenitra (35 DH)</option>
+                    <option value="Tangier">Tangier (35 DH)</option>
+                    <option value="Marrakech">Marrakech (35 DH)</option>
+                    <option value="Agadir">Agadir (35 DH)</option>
+                    <option value="Fès">Fès (35 DH)</option>
+                    <option value="Meknès">Meknès (35 DH)</option>
+                    <option value="Oujda">Oujda (35 DH)</option>
+                    <option value="Tetouan">Tetouan (35 DH)</option>
+                </select>
             </div>
             <input type="tel" id="cust-phone" placeholder="Numéro WhatsApp (Ex: 0612345678)" class="w-full text-xs p-3 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white/50 dark:bg-black/50 focus:outline-none focus:border-blue-600 transition font-medium">
         </div>
         <div class="p-5 border-t border-neutral-200/50 dark:border-neutral-800/50 bg-neutral-50/50 dark:bg-neutral-950/50">
             <div class="space-y-1.5 mb-4 text-xs font-medium">
                 <div class="flex justify-between opacity-60"><span>Sous-total</span><span id="subtotal-price">0 DH</span></div>
+                <div class="flex justify-between opacity-60 text-emerald-600 font-bold hidden" id="discount-row"><span>Remise Promo</span><span id="discount-price">-0 DH</span></div>
                 <div class="flex justify-between opacity-60"><span>Livraison</span><span id="shipping-price">0 DH</span></div>
                 <div class="flex justify-between items-center pt-2 border-t border-neutral-200 dark:border-neutral-800">
                     <span class="font-bold text-sm">Total</span>
@@ -266,25 +302,46 @@
         </div>
     </div>
 
-    <!-- نافذة تفاصيل المنتج المعدلة لتشمل حاوية ألبوم الصور المصغرة -->
     <div id="product-modal" class="p-6 md:p-8 flex flex-col max-h-[85vh] overflow-y-auto bg-white text-slate-900 border-2 border-slate-100">
         <div class="flex justify-between items-center mb-5">
-            <span id="modal-category" class="text-[10px] bg-blue-600 text-white font-extrabold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">Premium</span>
+            <div class="flex items-center gap-2">
+                <span id="modal-category" class="text-[10px] bg-blue-600 text-white font-extrabold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">Premium</span>
+                <span id="modal-stock" class="text-[10px] bg-emerald-100 text-emerald-700 font-extrabold px-2.5 py-1 rounded-full uppercase">En Stock</span>
+            </div>
             <button onclick="closeAll()" class="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center font-bold text-lg text-slate-500 hover:bg-slate-200 transition">&times;</button>
         </div>
+        
+        <!-- Urgency Countdown Banner -->
+        <div class="mb-4 p-2.5 bg-rose-50 border border-rose-200 rounded-xl text-center">
+            <p class="text-[11px] font-extrabold text-rose-600 uppercase tracking-wider">🔥 Offre Spéciale | Expire dans: <span id="timer-modal" class="font-black">02:15:00</span></p>
+        </div>
+
         <div class="flex flex-col items-center mb-6">
-            <div class="w-full max-w-[320px] aspect-square flex items-center justify-center mb-3 bg-slate-50 rounded-2xl overflow-hidden border border-slate-100 shadow-sm">
-                <img id="modal-img" src="" class="w-full h-full object-cover">
+            <div class="relative w-full max-w-[320px] aspect-square flex items-center justify-center mb-2 bg-slate-50 rounded-2xl overflow-hidden border border-slate-100 shadow-sm interactive-3d-box select-none" id="3d-container">
+                <img id="modal-img" src="" class="w-full h-full object-cover pointer-events-none transition-transform duration-75">
+                <div class="absolute top-3 right-3 bg-black/70 text-white text-[9px] font-extrabold px-2.5 py-1 rounded-full backdrop-blur-md flex items-center gap-1 shadow-sm pointer-events-none">
+                    <span>🔄</span> Vue 360° / 3D
+                </div>
             </div>
             
-            <!-- إضافة حاوية الصور المصغرة (ألبوم الصور النشط) هنا -->
             <div id="modal-thumbnails" class="flex gap-2 justify-center mb-4 overflow-x-auto max-w-[320px] no-scrollbar py-1"></div>
             
             <h2 id="modal-name" class="text-2xl font-black tracking-tight mb-1 text-center text-slate-900 uppercase">Product</h2>
+            <div class="flex items-center gap-2 mb-2">
+                <span class="text-amber-400 text-sm">⭐⭐⭐⭐⭐</span>
+                <span class="text-xs font-bold text-slate-400">(4.9/5 - 28 avis)</span>
+            </div>
             <p id="modal-price" class="text-blue-600 font-black text-2xl mb-3">0 DH</p>
             <p id="modal-desc" class="text-slate-600 text-xs text-center max-w-sm leading-relaxed font-medium">Description detail.</p>
         </div>
+
         <div class="space-y-5 border-t border-slate-100 pt-5">
+            <!-- Variant Selector -->
+            <div id="variant-section">
+                <label class="block text-[10px] font-extrabold text-slate-400 uppercase tracking-widest text-center mb-3">Option / Capacité</label>
+                <div id="modal-variants" class="flex gap-2 justify-center flex-wrap"></div>
+            </div>
+
             <div>
                 <label class="block text-[10px] font-extrabold text-slate-400 uppercase tracking-widest text-center mb-3">Couleurs Disponibles</label>
                 <div id="modal-colors" class="flex gap-2 justify-center"></div>
@@ -294,6 +351,22 @@
                 <span id="modal-qty" class="text-base font-black text-slate-900 w-6 text-center">1</span>
                 <button onclick="changeQty(1)" class="w-8 h-8 text-lg font-black text-slate-600 hover:text-blue-600 transition">+</button>
             </div>
+
+            <div class="grid grid-cols-3 gap-2 pt-2 border-t border-slate-100 text-center">
+                <div class="p-2 bg-slate-50 rounded-xl border border-slate-100">
+                    <span class="text-lg block">🚚</span>
+                    <span class="text-[9px] font-bold text-slate-600">توصيل سريع</span>
+                </div>
+                <div class="p-2 bg-slate-50 rounded-xl border border-slate-100">
+                    <span class="text-lg block">💵</span>
+                    <span class="text-[9px] font-bold text-slate-600">الدفع عند الاستلام</span>
+                </div>
+                <div class="p-2 bg-slate-50 rounded-xl border border-slate-100">
+                    <span class="text-lg block">🛡️</span>
+                    <span class="text-[9px] font-bold text-slate-600">ضمان 100%</span>
+                </div>
+            </div>
+
             <button onclick="addModalItemToCart()" class="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-black text-xs uppercase tracking-widest transition shadow-md hover:scale-[1.01] mt-2">AJOUTER AU SAC DE COMMANDE</button>
         </div>
     </div>
@@ -413,11 +486,17 @@
         const db = getDatabase(app);
 
         let productsDB = [];
-        let cart = [];
+        let cart = JSON.parse(localStorage.getItem('marboha_cart') || '[]');
         let currentSelectedProduct = null;
         let currentQty = 1;
         let currentSelectedColor = "";
+        let currentSelectedVariant = null;
+        let currentUnitPrice = 0;
+        let discountPercent = 0;
         let selectedBrand = "all";
+
+        window.current3dImages = [];
+        window.current3dIndex = 0;
 
         const bundledBrands = ["laxasfit", "regrsi", "stc-plus", "sunpin"];
 
@@ -433,6 +512,7 @@
                 }));
                 if (loadingIndicator) loadingIndicator.classList.add('hidden');
                 renderProducts(productsDB);
+                updateCart();
             } else {
                 if (loadingIndicator) {
                     loadingIndicator.innerHTML = "⚠️ Aucun produit disponible sur le serveur.";
@@ -525,12 +605,12 @@
             renderProducts(filtered);
         };
 
-        // دالة الـ Modal المُحدّثة لإنشاء ومعاينة ألبوم الصور المصغرة بشكل احترافي ومتجاوب
         window.openProductModal = function(id) {
             const product = productsDB.find(x => x.id === id);
             if(!product) return;
             currentSelectedProduct = product;
             currentQty = 1;
+            currentUnitPrice = parseFloat(product.price);
             currentSelectedColor = product.colors && product.colors.length > 0 ? product.colors[0] : "Standard";
 
             document.getElementById('modal-category').innerText = product.category;
@@ -540,11 +620,36 @@
             document.getElementById('modal-desc').innerText = product.desc;
             document.getElementById('modal-qty').innerText = currentQty;
 
-            // بناء شريط الصور المصغرة (الـ Thumbnails) ديناميكياً من مصفوفة Firebase الجديدة
+            // Variants (Capacities/Options)
+            const variantContainer = document.getElementById('modal-variants');
+            const variantSection = document.getElementById('variant-section');
+            if (product.variants && product.variants.length > 0) {
+                variantSection.classList.remove('hidden');
+                currentSelectedVariant = product.variants[0];
+                currentUnitPrice = parseFloat(product.variants[0].price);
+                document.getElementById('modal-price').innerText = currentUnitPrice + " DH";
+
+                variantContainer.innerHTML = product.variants.map((v, i) => `
+                    <button onclick="selectVariant(${i}, this)" class="var-opt px-3 py-1.5 rounded-xl border text-xs font-bold transition ${i === 0 ? 'bg-slate-900 text-white border-slate-900' : 'bg-slate-50 border-slate-200 text-slate-700'}">
+                        ${v.name} (${v.price} DH)
+                    </button>
+                `).join('');
+            } else {
+                variantSection.classList.add('hidden');
+                currentSelectedVariant = null;
+            }
+
+            if (product.images && Array.isArray(product.images) && product.images.length > 0) {
+                window.current3dImages = product.images;
+            } else {
+                window.current3dImages = [product.img];
+            }
+            window.current3dIndex = 0;
+
             const thumbContainer = document.getElementById('modal-thumbnails');
-            if (product.images && Array.isArray(product.images) && product.images.length > 1) {
-                thumbContainer.innerHTML = product.images.map((imgUrl, index) => `
-                    <button onclick="changeModalImage('${imgUrl}', this)" class="thumb-opt w-12 h-12 rounded-xl overflow-hidden border-2 transition-all shrink-0 ${index === 0 ? 'border-blue-600 scale-105 shadow-sm' : 'border-slate-200 opacity-60 hover:opacity-100'}">
+            if (window.current3dImages.length > 1) {
+                thumbContainer.innerHTML = window.current3dImages.map((imgUrl, index) => `
+                    <button onclick="changeModalImage('${imgUrl}', this, ${index})" class="thumb-opt w-12 h-12 rounded-xl overflow-hidden border-2 transition-all shrink-0 ${index === 0 ? 'border-blue-600 scale-105 shadow-sm' : 'border-slate-200 opacity-60 hover:opacity-100'}">
                         <img src="${imgUrl}" class="w-full h-full object-cover">
                     </button>
                 `).join('');
@@ -569,15 +674,31 @@
             document.getElementById('overlay').classList.add('active');
         };
 
-        // دالة مضافة لتبديل الصورة الكبيرة عند الضغط على أي صورة مصغرة بنجاح
-        window.changeModalImage = function(url, btn) {
+        window.selectVariant = function(index, btn) {
+            const variant = currentSelectedProduct.variants[index];
+            currentSelectedVariant = variant;
+            currentUnitPrice = parseFloat(variant.price);
+            document.getElementById('modal-price').innerText = currentUnitPrice + " DH";
+
+            document.querySelectorAll('.var-opt').forEach(b => {
+                b.classList.remove('bg-slate-900', 'text-white', 'border-slate-900');
+                b.classList.add('bg-slate-50', 'border-slate-200', 'text-slate-700');
+            });
+            btn.classList.add('bg-slate-900', 'text-white', 'border-slate-900');
+            btn.classList.remove('bg-slate-50', 'border-slate-200', 'text-slate-700');
+        };
+
+        window.changeModalImage = function(url, btn, index) {
             document.getElementById('modal-img').src = url;
+            window.current3dIndex = index;
             document.querySelectorAll('.thumb-opt').forEach(b => {
                 b.classList.remove('border-blue-600', 'scale-105', 'shadow-sm');
                 b.classList.add('border-slate-200', 'opacity-60');
             });
-            btn.classList.add('border-blue-600', 'scale-105', 'shadow-sm');
-            btn.classList.remove('border-slate-200', 'opacity-60');
+            if (btn) {
+                btn.classList.add('border-blue-600', 'scale-105', 'shadow-sm');
+                btn.classList.remove('border-slate-200', 'opacity-60');
+            }
         };
 
         window.selectColor = function(color, btn) {
@@ -596,15 +717,39 @@
             document.getElementById('modal-qty').innerText = currentQty;
         };
 
+        window.quickAddToCart = function(id) {
+            const product = productsDB.find(x => x.id === id);
+            if(!product) return;
+            const color = product.colors && product.colors.length > 0 ? product.colors[0] : "Standard";
+            const price = parseFloat(product.price);
+
+            const itemIndex = cart.findIndex(i => i.id === product.id && i.color === color && !i.variant);
+            if(itemIndex > -1) {
+                cart[itemIndex].qty += 1;
+            } else {
+                cart.push({
+                    ...product,
+                    price: price,
+                    qty: 1,
+                    color: color
+                });
+            }
+            showToast(`Ajouté au sac: ${product.name}`);
+            updateCart();
+        };
+
         window.addModalItemToCart = function() {
             if(!currentSelectedProduct) return;
-            const itemIndex = cart.findIndex(i => i.id === currentSelectedProduct.id && i.color === currentSelectedColor);
+            const variantName = currentSelectedVariant ? currentSelectedVariant.name : null;
+            const itemIndex = cart.findIndex(i => i.id === currentSelectedProduct.id && i.color === currentSelectedColor && i.variant === variantName);
             
             if(itemIndex > -1) {
                 cart[itemIndex].qty += currentQty;
             } else {
                 cart.push({
                     ...currentSelectedProduct,
+                    price: currentUnitPrice,
+                    variant: variantName,
                     qty: currentQty,
                     color: currentSelectedColor
                 });
@@ -616,6 +761,21 @@
 
         window.removeFromCart = function(index) {
             cart.splice(index, 1);
+            updateCart();
+        };
+
+        window.applyCoupon = function() {
+            const code = document.getElementById('coupon-code').value.trim().toUpperCase();
+            if (code === "MARBOHA10") {
+                discountPercent = 10;
+                showToast("🎉 Code promo appliqué: -10%");
+            } else if (code === "VIP20") {
+                discountPercent = 20;
+                showToast("🎉 Code promo appliqué: -20%");
+            } else {
+                alert("❌ Code promo invalide.");
+                discountPercent = 0;
+            }
             updateCart();
         };
 
@@ -670,19 +830,22 @@
             const toast = document.getElementById('toast-notif');
             document.getElementById('toast-text').innerText = text;
             
-            toast.classList.remove('opacity-0', 'pointer-events-none', 'top-[85px]');
-            toast.classList.add('opacity-100', 'top-[105px]');
+            toast.classList.remove('opacity-0', 'pointer-events-none', 'top-[80px]');
+            toast.classList.add('opacity-100', 'top-[100px]');
             
             setTimeout(() => {
-                toast.classList.remove('opacity-100', 'top-[105px]');
-                toast.classList.add('opacity-0', 'pointer-events-none', 'top-[95px]');
+                toast.classList.remove('opacity-100', 'top-[100px]');
+                toast.classList.add('opacity-0', 'pointer-events-none', 'top-[80px]');
             }, 3000);
         }
 
         function updateCart() {
+            localStorage.setItem('marboha_cart', JSON.stringify(cart));
             const container = document.getElementById('cart-items');
             const badge = document.getElementById('badge');
             const formContainer = document.getElementById('checkout-form-container');
+            const citySelect = document.getElementById('cust-city');
+            const selectedCity = citySelect ? citySelect.value : "";
             
             if(cart.length === 0) {
                 container.innerHTML = `<div class="text-center py-12 text-xs font-semibold opacity-40">Votre sac est vide</div>`;
@@ -691,6 +854,7 @@
                 document.getElementById('subtotal-price').innerText = "0 DH";
                 document.getElementById('total-price').innerText = "0 DH";
                 document.getElementById('shipping-price').innerText = "0 DH";
+                document.getElementById('discount-row').classList.add('hidden');
                 document.getElementById('shipping-progress').style.width = "0%";
                 document.getElementById('shipping-text').innerText = "Plus que 200 DH pour livraison gratuite";
                 return;
@@ -705,7 +869,7 @@
                     <img src="${item.img}" class="w-14 h-14 object-cover rounded-xl border">
                     <div class="flex-1 min-w-0">
                         <h4 class="text-xs font-bold truncate uppercase">${item.name}</h4>
-                        <p class="text-[10px] opacity-50 mt-0.5">Couleur: ${item.color}</p>
+                        <p class="text-[10px] opacity-50 mt-0.5">Couleur: ${item.color} ${item.variant ? '| Option: ' + item.variant : ''}</p>
                         <p class="text-xs font-extrabold text-blue-600 mt-1">${item.price} DH <span class="text-neutral-400 font-normal text-[10px]">x ${item.qty}</span></p>
                     </div>
                     <button onclick="removeFromCart(${index})" class="w-7 h-7 flex items-center justify-center rounded-full text-red-500 hover:bg-red-500/10 transition">&times;</button>
@@ -713,55 +877,84 @@
             `).join('');
 
             const subtotal = cart.reduce((total, item) => total + (item.price * item.qty), 0);
-            const shipping = subtotal >= 200 ? 0 : 30;
-            const total = subtotal + shipping;
+            const discountAmount = (subtotal * discountPercent) / 100;
+            const subtotalAfterDiscount = subtotal - discountAmount;
+
+            let shipping = 35;
+            if (["Rabat", "Salé", "Témara"].includes(selectedCity)) {
+                shipping = 20;
+            }
+            if (subtotalAfterDiscount >= 200) {
+                shipping = 0;
+            }
+
+            const total = subtotalAfterDiscount + shipping;
 
             document.getElementById('subtotal-price').innerText = `${subtotal} DH`;
+            if (discountPercent > 0) {
+                document.getElementById('discount-row').classList.remove('hidden');
+                document.getElementById('discount-price').innerText = `-${discountAmount} DH`;
+            } else {
+                document.getElementById('discount-row').classList.add('hidden');
+            }
+
             document.getElementById('shipping-price').innerText = shipping === 0 ? "Gratuit" : `${shipping} DH`;
             document.getElementById('total-price').innerText = `${total} DH`;
 
-            const progress = Math.min((subtotal / 200) * 100, 100);
+            const progress = Math.min((subtotalAfterDiscount / 200) * 100, 100);
             document.getElementById('shipping-progress').style.width = `${progress}%`;
-            if(subtotal >= 200) {
+            if(subtotalAfterDiscount >= 200) {
                 document.getElementById('shipping-text').innerText = "🎉 Félicitations! Livraison gratuite activée.";
             } else {
-                document.getElementById('shipping-text').innerText = `Plus que ${200 - subtotal} DH pour livraison gratuite`;
+                document.getElementById('shipping-text').innerText = `Plus que ${200 - subtotalAfterDiscount} DH pour livraison gratuite`;
             }
+        }
+
+        async function sendToDeliveryAPI(orderPayload) {
+            console.log("إرسال الشحنة إلى شركة التوصيل...", orderPayload);
         }
 
         window.checkout = function() {
             const name = document.getElementById('cust-name').value.trim();
-            const city = document.getElementById('cust-city').value.trim();
+            const city = document.getElementById('cust-city').value;
             const phone = document.getElementById('cust-phone').value.trim();
 
             if(!name || !city || !phone) {
-                alert("🚨 Veuillez remplir toutes las cases pour valider votre commande.");
+                alert("🚨 Veuillez remplir toutes les cases pour valider votre commande.");
                 return;
             }
 
             const subtotal = cart.reduce((total, item) => total + (item.price * item.qty), 0);
-            const shipping = subtotal >= 200 ? 0 : 30;
-            const total = subtotal + shipping;
+            const discountAmount = (subtotal * discountPercent) / 100;
+            const subtotalAfterDiscount = subtotal - discountAmount;
+
+            let shipping = ["Rabat", "Salé", "Témara"].includes(city) ? 20 : 35;
+            if (subtotalAfterDiscount >= 200) shipping = 0;
+
+            const total = subtotalAfterDiscount + shipping;
 
             const orderPayload = {
                 client: { name, city, phone },
-                items: cart.map(i => ({ id: i.id, name: i.name, qty: i.qty, color: i.color, price: i.price })),
-                financials: { subtotal, shipping, total },
+                items: cart.map(i => ({ id: i.id, name: i.name, qty: i.qty, color: i.color, variant: i.variant || null, price: i.price })),
+                financials: { subtotal, discount: discountAmount, shipping, total },
                 status: "Pending",
                 createdAt: new Date().toISOString()
             };
 
             push(ref(db, "orders/"), orderPayload)
                 .then(() => {
+                    sendToDeliveryAPI(orderPayload);
+
                     let text = `🛒 *NOUVELLE COMMANDE MARBOHA SHOP*\n\n`;
                     text += `👤 *Client:* ${name}\n`;
                     text += `📍 *Ville:* ${city}\n`;
                     text += `📞 *WhatsApp:* ${phone}\n\n`;
                     text += `📦 *DÉTAILS DES PRODUITS:*\n`;
                     cart.forEach((item, index) => {
-                        text += `${index + 1}. ${item.name} | *Qty:* ${item.qty} | *Couleur:* ${item.color} | *Prix:* ${item.price * item.qty} DH\n`;
+                        text += `${index + 1}. ${item.name} ${item.variant ? '('+item.variant+')' : ''} | *Qty:* ${item.qty} | *Couleur:* ${item.color} | *Prix:* ${item.price * item.qty} DH\n`;
                     });
-                    text += `\n💵 *Total Final:* ${total} DH (Livraison: ${shipping === 0 ? 'Grateuite' : '30 DH'})\n\n`;
+                    if (discountAmount > 0) text += `\n🎟️ *Remise Promo:* -${discountAmount} DH\n`;
+                    text += `\n💵 *Total Final:* ${total} DH (Livraison: ${shipping === 0 ? 'Gratuite' : shipping + ' DH'})\n\n`;
                     text += `⚡ _Merci d'avoir choisi Marboha Shop._`;
 
                     cart = [];
@@ -784,13 +977,21 @@
                 return;
             }
             grid.innerHTML = items.map(p => `
-                <div class="product-card p-3 flex flex-col justify-between cursor-pointer" onclick="openProductModal('${p.id}')">
+                <div class="product-card p-3 flex flex-col justify-between cursor-pointer relative group" onclick="openProductModal('${p.id}')">
                     <div class="relative w-full aspect-square rounded-2xl overflow-hidden bg-white dark:bg-slate-950 flex items-center justify-center mb-3 border border-neutral-200/50 dark:border-neutral-800/40 shadow-sm">
                         <img src="${p.img}" class="w-full h-full object-cover transform hover:scale-105 transition duration-500">
                         <span class="absolute top-2 left-2 text-[8px] bg-blue-600 text-white font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider">${p.brand ? p.brand : 'Premium'}</span>
+                        
+                        <button onclick="event.stopPropagation(); quickAddToCart('${p.id}')" class="absolute bottom-2 right-2 w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-base shadow-lg hover:scale-110 transition active:scale-95" title="Quick Add">
+                            +
+                        </button>
                     </div>
                     <div class="px-1">
                         <h3 class="text-xs font-extrabold tracking-tight uppercase truncate mb-0.5">${p.name}</h3>
+                        <div class="flex items-center gap-1 mb-1">
+                            <span class="text-amber-400 text-[10px]">⭐⭐⭐⭐⭐</span>
+                            <span class="text-[9px] font-bold text-slate-400">(4.9)</span>
+                        </div>
                         <div class="flex justify-between items-center mt-1.5">
                             <span class="text-blue-600 dark:text-blue-400 font-extrabold text-sm">${p.price} DH</span>
                             <span class="text-[9px] font-bold opacity-40 uppercase tracking-widest">${p.category} →</span>
@@ -823,12 +1024,72 @@
             }, Math.floor(Math.random() * (45000 - 25000 + 1)) + 25000);
         }
 
+        function startTimer() {
+            let totalSeconds = 8100; // 2h 15m
+            setInterval(() => {
+                if (totalSeconds <= 0) totalSeconds = 8100;
+                totalSeconds--;
+                const hrs = String(Math.floor(totalSeconds / 3600)).padStart(2, '0');
+                const mins = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, '0');
+                const secs = String(totalSeconds % 60).padStart(2, '0');
+                const el = document.getElementById('timer-modal');
+                if (el) el.innerText = `${hrs}:${mins}:${secs}`;
+            }, 1000);
+        }
+
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'dark') {
             document.documentElement.classList.add('dark-mode');
         }
         
         startLiveSalesSimulation();
+        startTimer();
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const box3D = document.getElementById('3d-container');
+            let isDragging3D = false;
+            let startX3D = 0;
+
+            const handleStart3D = (e) => {
+                if (!window.current3dImages || window.current3dImages.length <= 1) return;
+                isDragging3D = true;
+                startX3D = e.clientX || (e.touches && e.touches[0].clientX);
+            };
+
+            const handleMove3D = (e) => {
+                if (!isDragging3D || !window.current3dImages || window.current3dImages.length <= 1) return;
+                const currentX = e.clientX || (e.touches && e.touches[0].clientX);
+                const diffX = currentX - startX3D;
+
+                if (Math.abs(diffX) > 15) { 
+                    if (diffX > 0) {
+                        window.current3dIndex = (window.current3dIndex - 1 + window.current3dImages.length) % window.current3dImages.length;
+                    } else {
+                        window.current3dIndex = (window.current3dIndex + 1) % window.current3dImages.length;
+                    }
+                    const newImgUrl = window.current3dImages[window.current3dIndex];
+                    document.getElementById('modal-img').src = newImgUrl;
+                    
+                    const thumbs = document.querySelectorAll('.thumb-opt');
+                    if (thumbs[window.current3dIndex]) {
+                        window.changeModalImage(newImgUrl, thumbs[window.current3dIndex], window.current3dIndex);
+                    }
+                    startX3D = currentX;
+                }
+            };
+
+            const handleEnd3D = () => { isDragging3D = false; };
+
+            box3D.addEventListener('mousedown', handleStart3D);
+            window.addEventListener('mousemove', handleMove3D);
+            window.addEventListener('mouseup', handleEnd3D);
+
+            box3D.addEventListener('touchstart', handleStart3D, { passive: true });
+            window.addEventListener('touchmove', handleMove3D, { passive: true });
+            window.addEventListener('touchend', handleEnd3D);
+        });
     </script>
 </body>
-</html>
+</html> 
