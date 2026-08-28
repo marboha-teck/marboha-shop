@@ -318,7 +318,7 @@
 
         <div class="flex flex-col items-center mb-6">
             <div class="relative w-full max-w-[320px] aspect-square flex items-center justify-center mb-2 bg-slate-50 rounded-2xl overflow-hidden border border-slate-100 shadow-sm interactive-3d-box select-none" id="3d-container">
-                <img id="modal-img" src="" class="w-full h-full object-cover pointer-events-none transition-transform duration-75">
+                <img id="modal-img" src="" class="cover-object w-full h-full object-cover pointer-events-none transition-transform duration-75">
                 <div class="absolute top-3 right-3 bg-black/70 text-white text-[9px] font-extrabold px-2.5 py-1 rounded-full backdrop-blur-md flex items-center gap-1 shadow-sm pointer-events-none">
                     <span>🔄</span> Vue 360° / 3D
                 </div>
@@ -399,7 +399,7 @@
         <section class="py-14 px-4 md:px-6 border-t border-neutral-200/40 dark:border-neutral-800/40 bg-neutral-100/20 dark:bg-neutral-900/10">
             <div class="max-w-5xl mx-auto text-center">
                 <h3 class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-3">Témoignages</h3>
-                <h2 class="text-xl md:text-2xl font-extrabold tracking-tight mb-10 uppercase">Ce que dicen nos clients ⭐⭐⭐⭐⭐</h2>
+                <h2 class="text-xl md:text-2xl font-extrabold tracking-tight mb-10 uppercase">Ce que disent nos clients ⭐⭐⭐⭐⭐</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                     <div class="product-card p-5 text-left flex flex-col justify-between">
                         <p class="text-neutral-500 dark:text-neutral-300 text-xs italic leading-relaxed mb-4">"Livraison très rapide à Rabat. Le chargeur Samsung 65W est 100% original. Je recommande Marboha Shop !"</p>
@@ -500,16 +500,38 @@
 
         const bundledBrands = ["laxasfit", "regrsi", "stc-plus", "sunpin"];
 
+        // Safe Image Resolver
+        function getSafeCoverImage(p) {
+            if (!p) return 'https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?auto=format&fit=crop&w=600&q=80';
+            if (p.images && Array.isArray(p.images) && p.images.length > 0 && p.images[0]) {
+                return p.images[0];
+            }
+            if (p.image && typeof p.image === 'string' && p.image.trim() !== '') {
+                return p.image;
+            }
+            if (p.img && typeof p.img === 'string' && p.img.trim() !== '') {
+                return p.img;
+            }
+            return 'https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?auto=format&fit=crop&w=600&q=80';
+        }
+
         const productsRef = ref(db, "products/");
         onValue(productsRef, (snapshot) => {
             const data = snapshot.val();
             const loadingIndicator = document.getElementById('loading-indicator');
             
             if (data) {
-                productsDB = Object.keys(data).map(key => ({
-                    id: key,
-                    ...data[key]
-                }));
+                productsDB = Object.keys(data).map(key => {
+                    const item = data[key];
+                    const safeImage = getSafeCoverImage(item);
+                    return {
+                        id: key,
+                        ...item,
+                        img: safeImage,
+                        image: safeImage,
+                        description: item.description || item.desc || ''
+                    };
+                });
                 if (loadingIndicator) loadingIndicator.classList.add('hidden');
                 renderProducts(productsDB);
                 updateCart();
@@ -598,7 +620,7 @@
                 return;
             }
             const filtered = productsDB.filter(p => 
-                p.name.toLowerCase().includes(query) || 
+                (p.name && p.name.toLowerCase().includes(query)) || 
                 (p.category && p.category.toLowerCase().includes(query)) ||
                 (p.brand && p.brand.toLowerCase().includes(query))
             );
@@ -610,14 +632,16 @@
             if(!product) return;
             currentSelectedProduct = product;
             currentQty = 1;
-            currentUnitPrice = parseFloat(product.price);
+            currentUnitPrice = parseFloat(product.price) || 0;
             currentSelectedColor = product.colors && product.colors.length > 0 ? product.colors[0] : "Standard";
 
-            document.getElementById('modal-category').innerText = product.category;
-            document.getElementById('modal-img').src = product.img;
-            document.getElementById('modal-name').innerText = product.name;
-            document.getElementById('modal-price').innerText = product.price + " DH";
-            document.getElementById('modal-desc').innerText = product.desc;
+            const coverImg = getSafeCoverImage(product);
+
+            document.getElementById('modal-category').innerText = product.category || 'Premium';
+            document.getElementById('modal-img').src = coverImg;
+            document.getElementById('modal-name').innerText = product.name || '';
+            document.getElementById('modal-price').innerText = (product.price || 0) + " DH";
+            document.getElementById('modal-desc').innerText = product.description || product.desc || 'Aucune description disponible.';
             document.getElementById('modal-qty').innerText = currentQty;
 
             // Variants (Capacities/Options)
@@ -640,9 +664,9 @@
             }
 
             if (product.images && Array.isArray(product.images) && product.images.length > 0) {
-                window.current3dImages = product.images;
+                window.current3dImages = product.images.filter(Boolean);
             } else {
-                window.current3dImages = [product.img];
+                window.current3dImages = [coverImg];
             }
             window.current3dIndex = 0;
 
@@ -721,7 +745,8 @@
             const product = productsDB.find(x => x.id === id);
             if(!product) return;
             const color = product.colors && product.colors.length > 0 ? product.colors[0] : "Standard";
-            const price = parseFloat(product.price);
+            const price = parseFloat(product.price) || 0;
+            const safeImg = getSafeCoverImage(product);
 
             const itemIndex = cart.findIndex(i => i.id === product.id && i.color === color && !i.variant);
             if(itemIndex > -1) {
@@ -729,6 +754,8 @@
             } else {
                 cart.push({
                     ...product,
+                    img: safeImg,
+                    image: safeImg,
                     price: price,
                     qty: 1,
                     color: color
@@ -742,12 +769,15 @@
             if(!currentSelectedProduct) return;
             const variantName = currentSelectedVariant ? currentSelectedVariant.name : null;
             const itemIndex = cart.findIndex(i => i.id === currentSelectedProduct.id && i.color === currentSelectedColor && i.variant === variantName);
+            const safeImg = getSafeCoverImage(currentSelectedProduct);
             
             if(itemIndex > -1) {
                 cart[itemIndex].qty += currentQty;
             } else {
                 cart.push({
                     ...currentSelectedProduct,
+                    img: safeImg,
+                    image: safeImg,
                     price: currentUnitPrice,
                     variant: variantName,
                     qty: currentQty,
@@ -864,17 +894,20 @@
             badge.innerText = cart.reduce((total, item) => total + item.qty, 0);
             formContainer.classList.remove('hidden');
 
-            container.innerHTML = cart.map((item, index) => `
-                <div class="flex items-center gap-3 p-3 bg-white/50 dark:bg-black/20 rounded-2xl border border-neutral-200/40 dark:border-neutral-800/40">
-                    <img src="${item.img}" class="w-14 h-14 object-cover rounded-xl border">
-                    <div class="flex-1 min-w-0">
-                        <h4 class="text-xs font-bold truncate uppercase">${item.name}</h4>
-                        <p class="text-[10px] opacity-50 mt-0.5">Couleur: ${item.color} ${item.variant ? '| Option: ' + item.variant : ''}</p>
-                        <p class="text-xs font-extrabold text-blue-600 mt-1">${item.price} DH <span class="text-neutral-400 font-normal text-[10px]">x ${item.qty}</span></p>
+            container.innerHTML = cart.map((item, index) => {
+                const itemImg = item.img || item.image || getSafeCoverImage(item);
+                return `
+                    <div class="flex items-center gap-3 p-3 bg-white/50 dark:bg-black/20 rounded-2xl border border-neutral-200/40 dark:border-neutral-800/40">
+                        <img src="${itemImg}" class="w-14 h-14 object-cover rounded-xl border">
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-xs font-bold truncate uppercase">${item.name}</h4>
+                            <p class="text-[10px] opacity-50 mt-0.5">Couleur: ${item.color} ${item.variant ? '| Option: ' + item.variant : ''}</p>
+                            <p class="text-xs font-extrabold text-blue-600 mt-1">${item.price} DH <span class="text-neutral-400 font-normal text-[10px]">x ${item.qty}</span></p>
+                        </div>
+                        <button onclick="removeFromCart(${index})" class="w-7 h-7 flex items-center justify-center rounded-full text-red-500 hover:bg-red-500/10 transition">&times;</button>
                     </div>
-                    <button onclick="removeFromCart(${index})" class="w-7 h-7 flex items-center justify-center rounded-full text-red-500 hover:bg-red-500/10 transition">&times;</button>
-                </div>
-            `).join('');
+                `;
+            }).join('');
 
             const subtotal = cart.reduce((total, item) => total + (item.price * item.qty), 0);
             const discountAmount = (subtotal * discountPercent) / 100;
@@ -976,29 +1009,32 @@
                 grid.innerHTML = `<div class="col-span-full text-center py-12 text-xs font-semibold opacity-40">Aucun produit trouvé pour cette sélection</div>`;
                 return;
             }
-            grid.innerHTML = items.map(p => `
-                <div class="product-card p-3 flex flex-col justify-between cursor-pointer relative group" onclick="openProductModal('${p.id}')">
-                    <div class="relative w-full aspect-square rounded-2xl overflow-hidden bg-white dark:bg-slate-950 flex items-center justify-center mb-3 border border-neutral-200/50 dark:border-neutral-800/40 shadow-sm">
-                        <img src="${p.img}" class="w-full h-full object-cover transform hover:scale-105 transition duration-500">
-                        <span class="absolute top-2 left-2 text-[8px] bg-blue-600 text-white font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider">${p.brand ? p.brand : 'Premium'}</span>
-                        
-                        <button onclick="event.stopPropagation(); quickAddToCart('${p.id}')" class="absolute bottom-2 right-2 w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-base shadow-lg hover:scale-110 transition active:scale-95" title="Quick Add">
-                            +
-                        </button>
-                    </div>
-                    <div class="px-1">
-                        <h3 class="text-xs font-extrabold tracking-tight uppercase truncate mb-0.5">${p.name}</h3>
-                        <div class="flex items-center gap-1 mb-1">
-                            <span class="text-amber-400 text-[10px]">⭐⭐⭐⭐⭐</span>
-                            <span class="text-[9px] font-bold text-slate-400">(4.9)</span>
+            grid.innerHTML = items.map(p => {
+                const coverSrc = getSafeCoverImage(p);
+                return `
+                    <div class="product-card p-3 flex flex-col justify-between cursor-pointer relative group" onclick="openProductModal('${p.id}')">
+                        <div class="relative w-full aspect-square rounded-2xl overflow-hidden bg-white dark:bg-slate-950 flex items-center justify-center mb-3 border border-neutral-200/50 dark:border-neutral-800/40 shadow-sm">
+                            <img src="${coverSrc}" class="cover-object w-full h-full object-cover transform hover:scale-105 transition duration-500" alt="${p.name || 'Product Image'}" loading="lazy">
+                            <span class="absolute top-2 left-2 text-[8px] bg-blue-600 text-white font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider">${p.brand ? p.brand : 'Premium'}</span>
+                            
+                            <button onclick="event.stopPropagation(); quickAddToCart('${p.id}')" class="absolute bottom-2 right-2 w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-base shadow-lg hover:scale-110 transition active:scale-95" title="Quick Add">
+                                +
+                            </button>
                         </div>
-                        <div class="flex justify-between items-center mt-1.5">
-                            <span class="text-blue-600 dark:text-blue-400 font-extrabold text-sm">${p.price} DH</span>
-                            <span class="text-[9px] font-bold opacity-40 uppercase tracking-widest">${p.category} →</span>
+                        <div class="px-1">
+                            <h3 class="text-xs font-extrabold tracking-tight uppercase truncate mb-0.5">${p.name}</h3>
+                            <div class="flex items-center gap-1 mb-1">
+                                <span class="text-amber-400 text-[10px]">⭐⭐⭐⭐⭐</span>
+                                <span class="text-[9px] font-bold text-slate-400">(4.9)</span>
+                            </div>
+                            <div class="flex justify-between items-center mt-1.5">
+                                <span class="text-blue-600 dark:text-blue-400 font-extrabold text-sm">${p.price} DH</span>
+                                <span class="text-[9px] font-bold opacity-40 uppercase tracking-widest">${p.category || ''} →</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
         function startLiveSalesSimulation() {
@@ -1092,4 +1128,4 @@
         });
     </script>
 </body>
-</html> 
+</html>
